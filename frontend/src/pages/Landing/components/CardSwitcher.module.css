@@ -1,0 +1,35 @@
+.card-switcher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.1em solid #7F8C8D;
+    border-radius: 10px;
+    width: 60vw;
+    min-height: 22vh;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #2C3E50;
+}
+
+.card-switcher button {
+    background-color: transparent;
+    margin: 0 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.card-switcher .card-title {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #3498DB;
+    margin-bottom: 1rem;
+}
+
+.card-switcher .transition {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.card-switcher .visible {
+    opacity: 1;
+}

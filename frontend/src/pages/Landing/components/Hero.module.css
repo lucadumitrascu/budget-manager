@@ -1,0 +1,59 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.hero h2 {
+    color: #2C3E50;
+    font-size: 2rem;
+    margin: 0.7rem;
+}
+
+.hero p {
+    color: #7F8C8D;
+    font-size: 1.2rem;
+    margin: 0.7rem;
+}
+
+.hero-buttons {
+    display: flex;
+    margin: 0.7rem;
+    gap: 1.5rem;
+}
+
+.hero-buttons button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+}
+
+.hero-buttons .get-started-btn {
+    background-color: #3498DB;
+}
+
+.hero-buttons .get-started-btn:hover {
+    background-color: #2980B9;
+    cursor: pointer;
+}
+
+.hero-buttons .login-btn {
+    background-color: #2C3E50;
+}
+
+.hero-buttons .login-btn:hover {
+    background-color: #3498DB;
+    cursor: pointer;
+}
+
+.hero .hero-highlight {
+    color: #F39C12;
+    display: inline;
+    font-size: 2rem;
+}

@@ -1,0 +1,43 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2C3E50;
+    color: white;
+    padding: 1rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar-buttons button {
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+}
+
+.navbar-buttons .join-btn {
+    background-color: #3498DB;
+}
+
+.navbar-buttons .join-btn:hover {
+    background-color: #2980B9;
+    cursor: pointer;
+}
+
+.navbar-buttons .login-btn {
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+.navbar-buttons .login-btn:hover {
+    background-color: white;
+    color: #2C3E50;
+    cursor: pointer;
+}
