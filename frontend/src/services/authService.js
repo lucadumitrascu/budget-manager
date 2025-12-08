@@ -1,4 +1,4 @@
-import { makeRequest } from "../utils/api/makeRequest";
+import { makeRequest } from "../utils/makeRequest";
 const API_BASE_URL = "http://localhost:8080/api/auth";
 
 export const authenticateUser = async (email, password) => {
