@@ -1,0 +1,15 @@
+.auth-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 2rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    color: #2C3E50;
+    text-align: center;
+    margin: 0;
+}
