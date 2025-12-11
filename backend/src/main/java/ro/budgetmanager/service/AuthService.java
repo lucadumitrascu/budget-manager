@@ -13,6 +13,8 @@ import ro.budgetmanager.entity.User;
 import ro.budgetmanager.repository.UserRepository;
 import ro.budgetmanager.security.JwtTokenGenerator;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -20,15 +22,18 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenGenerator jwtTokenGenerator;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public AuthService(UserRepository userRepository,
                        AuthenticationManager authenticationManager,
                        JwtTokenGenerator jwtTokenGenerator,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder,
+                       EmailService emailService) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtTokenGenerator = jwtTokenGenerator;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     public ResponseEntity<ApiResponseDto<String>> login(UserCredentialsDto userCredentialsDto) {
@@ -38,28 +43,69 @@ public class AuthService {
 
     public ResponseEntity<ApiResponseDto<String>> register(UserCredentialsDto userCredentialsDto) {
         if (userRepository.existsByEmail(userCredentialsDto.getEmail())) {
-            ApiResponseDto<String> response = new ApiResponseDto<>("Email is already in use.", null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return buildResponse("Email is already in use.", null, HttpStatus.BAD_REQUEST);
         }
         createAccount(userCredentialsDto.getEmail(), userCredentialsDto.getPassword());
         return authenticateUserAndGenerateToken(userCredentialsDto.getEmail(), userCredentialsDto.getPassword(),
                 HttpStatus.CREATED, "Authentication failed after registration.");
     }
 
+    public ResponseEntity<ApiResponseDto<String>> forgotPassword(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            return buildResponse("Email not found.", null, HttpStatus.NOT_FOUND);
+        }
+
+        User user = userOptional.get();
+        String token = jwtTokenGenerator.generateToken(user.getEmail(), true);
+
+        String resetLink = "http://localhost:5173/authentication/reset-password?token=" + token;
+        String username = user.getUsername() != null ? user.getUsername() : "User";
+        String subject = "Reset Your Password";
+        String body = "Hello " + username + ",\n\n"
+                + "Click the link below to reset your password:\n"
+                + resetLink + "\n\n"
+                + "This link will expire in 10 minutes.";
+
+        emailService.sendEmail(email, subject, body);
+
+        return buildResponse("Password reset link sent successfully.", null, HttpStatus.OK);
+    }
+
+    public ResponseEntity<ApiResponseDto<String>> resetPassword(String authHeader, String newPassword) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        if (!jwtTokenGenerator.isTokenValid(token, true)) {
+            return buildResponse("Invalid or expired token.", null, HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtTokenGenerator.getEmailFromJwt(token);
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            return buildResponse("User not found.", null, HttpStatus.NOT_FOUND);
+        }
+
+        User user = userOptional.get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return buildResponse("Password has been successfully reset.", null, HttpStatus.OK);
+    }
+
     private ResponseEntity<ApiResponseDto<String>> authenticateUserAndGenerateToken(String email, String password, HttpStatus successStatus, String errorMessage) {
-        ApiResponseDto<String> response;
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            String token = jwtTokenGenerator.generateToken(email);
-            response = new ApiResponseDto<>(null, token);
-            return ResponseEntity.status(successStatus).body(response);
+            String token = jwtTokenGenerator.generateToken(email, false);
+            return buildResponse(null, token, successStatus);
         } catch (AuthenticationException e) {
-            response = new ApiResponseDto<>(errorMessage, null);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            return buildResponse(errorMessage, null, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            response = new ApiResponseDto<>("An unexpected error occurred.", null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return buildResponse("An unexpected error occurred.", null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private ResponseEntity<ApiResponseDto<String>> buildResponse(String message, String data, HttpStatus status) {
+        ApiResponseDto<String> response = new ApiResponseDto<>(message, data);
+        return ResponseEntity.status(status).body(response);
     }
 
     private void createAccount(String email, String password) {

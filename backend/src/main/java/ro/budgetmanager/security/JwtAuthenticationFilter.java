@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -29,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         String token = getJwtFromRequest(request);
-        if (StringUtils.hasText(token) && jwtTokenGenerator.validateToken(token)) {
+        if (StringUtils.hasText(token) && jwtTokenGenerator.isTokenValid(token, false)) {
             String email = jwtTokenGenerator.getEmailFromJwt(token);
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
             Authentication authentication =

@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.budgetmanager.dto.ApiResponseDto;
+import ro.budgetmanager.dto.EmailDto;
+import ro.budgetmanager.dto.PasswordDto;
 import ro.budgetmanager.dto.UserCredentialsDto;
 import ro.budgetmanager.service.AuthService;
 
@@ -25,5 +27,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponseDto<String>> login(@Valid @RequestBody UserCredentialsDto userCredentialsDto) {
         return authService.login(userCredentialsDto);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponseDto<String>> forgotPassword(@Valid @RequestBody EmailDto emailDto) {
+        return authService.forgotPassword(emailDto.getEmail());
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<ApiResponseDto<String>> resetPassword(@RequestHeader("Authorization") String authHeader,
+                                                                @Valid @RequestBody PasswordDto passwordDto) {
+        return authService.resetPassword(authHeader, passwordDto.getPassword());
     }
 }
