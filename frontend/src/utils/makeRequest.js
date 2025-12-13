@@ -1,10 +1,14 @@
-export const makeRequest = async (baseUrl, endpoint, method = "POST", body = null) => {
+export const makeRequest = async (baseUrl, endpoint, method = "POST", body = null, token = null) => {
     try {
+        const headers = {
+            "Content-Type": "application/json",
+        };
+
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method,
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers,
             body: body ? JSON.stringify(body) : null
         });
 

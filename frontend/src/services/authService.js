@@ -20,3 +20,7 @@ export const createAccount = async (email, password) => {
 export const sendEmail = (email) => {
     return makeRequest(API_BASE_URL, "/forgot-password", "POST", { email });
 };
+
+export const resetPassword = (password, token) => {
+    return makeRequest(API_BASE_URL, "/reset-password", "PUT", { password }, token);
+};
