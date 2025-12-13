@@ -16,3 +16,7 @@ export const createAccount = async (email, password) => {
     }
     return result;
 };
+
+export const sendEmail = (email) => {
+    return makeRequest(API_BASE_URL, "/forgot-password", "POST", { email });
+};

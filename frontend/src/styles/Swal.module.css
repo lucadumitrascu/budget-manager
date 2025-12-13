@@ -1,0 +1,29 @@
+.custom-swal {
+    color: black;
+    justify-content: space-around;
+    border: 0.2rem solid #2C3E50;
+    padding: 0.5rem 0;
+    width: 30rem;
+}
+
+.custom-swal-content {
+    margin: 0;
+    padding: 1rem 4rem;
+}
+
+.custom-swal-icon {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.custom-swal-title {
+    padding-top: 0.5rem;
+}
+
+.custom-swal-confirm {
+    margin: 1rem 0;
+}
+
+.custom-swal-actions {
+    margin: 0;
+}
