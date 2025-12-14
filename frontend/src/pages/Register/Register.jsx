@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { createAccount } from "../../services/authService";
 import { validateEmail, validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
@@ -12,7 +12,7 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useError();
-    const navigate = useNavigate();
+    const { goToDashboard, goToLogin } = useNavigation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,15 +27,11 @@ function Register() {
 
         const result = await createAccount(email, password);
         if (result.success) {
-            navigate("/dashboard");
+            goToDashboard();
         } else {
             setError(result.message);
         }
     };
-
-    const handleSecondaryButtonClick = () => {
-        navigate("/authentication/login");
-    }
 
     return (
         <AuthLayout>
@@ -43,7 +39,7 @@ function Register() {
                 primaryButtonText="Register"
                 secondaryButtonText="Login"
                 onSubmit={handleSubmit}
-                onSecondaryButtonClick={handleSecondaryButtonClick}
+                onSecondaryButtonClick={goToLogin}
                 error={error}
             >
                 <Input

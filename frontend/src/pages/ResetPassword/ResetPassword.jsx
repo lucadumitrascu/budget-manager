@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { resetPassword } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
@@ -13,7 +14,7 @@ function ResetPassword() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [submitClicked, setSubmitClicked] = useState(false);
     const [error, setError] = useError();
-    const navigate = useNavigate();
+    const { goToLogin } = useNavigation();
     const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
@@ -33,7 +34,7 @@ function ResetPassword() {
             setSubmitClicked(true);
             const result = await resetPassword(password, token);
             if (result.success) {
-                showSuccessSwal(result.message, () => navigate("/authentication/login"));
+                showSuccessSwal(result.message, goToLogin);
             } else {
                 setError(result.message)
             }

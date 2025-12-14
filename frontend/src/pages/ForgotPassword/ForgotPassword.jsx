@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { sendEmail } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
@@ -12,11 +12,8 @@ function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [submitClicked, setSubmitClicked] = useState(false);
     const [error, setError] = useError();
-    const navigate = useNavigate();
 
-    const handleGoBackClick = () => {
-        navigate("/authentication/login");
-    }
+    const { goToLogin } = useNavigation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,7 +28,7 @@ function ForgotPassword() {
             setSubmitClicked(true);
             const result = await sendEmail(email);
             if (result.success) {
-                showSuccessSwal(result.message, () => navigate("/authentication/login"));
+                showSuccessSwal(result.message, goToLogin);
             } else {
                 setError(result.message)
             }
@@ -46,7 +43,7 @@ function ForgotPassword() {
                 primaryButtonText="Submit"
                 secondaryButtonText="Go back"
                 onSubmit={handleSubmit}
-                onSecondaryButtonClick={handleGoBackClick}
+                onSecondaryButtonClick={goToLogin}
                 error={error}
             >
                 <Input
