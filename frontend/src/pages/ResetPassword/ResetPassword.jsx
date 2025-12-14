@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
 import { resetPassword } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
+import { validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
 import AuthForm from "../../components/AuthForm";
 import Input from "../../components/Input";
@@ -20,21 +21,23 @@ function ResetPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            setError("Passwords must be the same.");
-        } else if (password.length < 6) {
-            setError("Password must be at least 6 characters long.");
-        } else {
-            if (!submitClicked) {
-                setSubmitClicked(true);
-                const result = await resetPassword(password, token);
-                if (result.success) {
-                    showSuccessSwal(result.message, () => navigate("/authentication/login"));
-                } else {
-                    setError(result.message)
-                }
-                setSubmitClicked(false);
+
+        const errorMessage = validatePasswordMatch(password, confirmPassword) ||
+            validatePasswordLength(password);
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
+        }
+
+        if (!submitClicked) {
+            setSubmitClicked(true);
+            const result = await resetPassword(password, token);
+            if (result.success) {
+                showSuccessSwal(result.message, () => navigate("/authentication/login"));
+            } else {
+                setError(result.message)
             }
+            setSubmitClicked(false);
         }
     };
 

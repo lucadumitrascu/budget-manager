@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
 import { authenticateUser } from "../../services/authService";
+import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
 import AuthForm from "../../components/AuthForm";
 import Input from "../../components/Input";
@@ -15,6 +16,12 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errorMessage = validateEmail(email);
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
+        }
 
         const result = await authenticateUser(email, password);
         if (result.success) {

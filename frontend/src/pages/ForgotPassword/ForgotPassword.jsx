@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
 import { sendEmail } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
+import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
 import AuthForm from "../../components/AuthForm";
 import Input from "../../components/Input";
@@ -19,6 +20,13 @@ function ForgotPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errorMessage = validateEmail(email);
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
+        }
+
         if (!submitClicked) {
             setSubmitClicked(true);
             const result = await sendEmail(email);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
 import { createAccount } from "../../services/authService";
+import { validateEmail, validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
 import AuthForm from "../../components/AuthForm";
 import Input from "../../components/Input";
@@ -16,17 +17,19 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-            setError("Passwords must be the same.");
-        } else if (password.length < 6) {
-            setError("Password must be at least 6 characters long.");
+        const errorMessage = validateEmail(email) ||
+            validatePasswordMatch(password, confirmPassword) ||
+            validatePasswordLength(password);
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
+        }
+
+        const result = await createAccount(email, password);
+        if (result.success) {
+            navigate("/dashboard");
         } else {
-            const result = await createAccount(email, password);
-            if (result.success) {
-                navigate("/dashboard");
-            } else {
-                setError(result.message);
-            }
+            setError(result.message);
         }
     };
 
@@ -47,7 +50,7 @@ function Register() {
                     label={"Email"} id="email" autoComplete="email" type="text"
                     value={email} onChange={(e) => setEmail(e.target.value)} />
                 <Input
-                    label={"Password"} id="password" autoComplete="new-password" type="password" 
+                    label={"Password"} id="password" autoComplete="new-password" type="password"
                     maxLength="60" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <Input
                     label={"Confirm Password"} id="confirm-password" autoComplete="new-password" type="password"
