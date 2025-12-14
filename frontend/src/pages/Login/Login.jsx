@@ -11,6 +11,7 @@ import PasswordInput from "./components/PasswordInput";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
     const { goToDashboard, goToRegister } = useNavigation();
 
@@ -23,7 +24,9 @@ function Login() {
             return;
         }
 
+        setIsLoading(true);
         const result = await authenticateUser(email, password);
+        setIsLoading(false);
         if (result.success) {
             goToDashboard();
         } else {
@@ -38,6 +41,7 @@ function Login() {
                 secondaryButtonText="Register"
                 onSubmit={handleSubmit}
                 onSecondaryButtonClick={goToRegister}
+                isLoading={isLoading}
                 error={error}
             >
                 <Input

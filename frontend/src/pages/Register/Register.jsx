@@ -11,6 +11,7 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
     const { goToDashboard, goToLogin } = useNavigation();
 
@@ -25,7 +26,9 @@ function Register() {
             return;
         }
 
+        setIsLoading(true);
         const result = await createAccount(email, password);
+        setIsLoading(false);
         if (result.success) {
             goToDashboard();
         } else {
@@ -40,6 +43,7 @@ function Register() {
                 secondaryButtonText="Login"
                 onSubmit={handleSubmit}
                 onSecondaryButtonClick={goToLogin}
+                isLoading={isLoading}
                 error={error}
             >
                 <Input

@@ -10,7 +10,7 @@ import Input from "../../components/Input";
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
-    const [submitClicked, setSubmitClicked] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
 
     const { goToLogin } = useNavigation();
@@ -24,15 +24,13 @@ function ForgotPassword() {
             return;
         }
 
-        if (!submitClicked) {
-            setSubmitClicked(true);
-            const result = await sendEmail(email);
-            if (result.success) {
-                showSuccessSwal(result.message, goToLogin);
-            } else {
-                setError(result.message)
-            }
-            setSubmitClicked(false);
+        setIsLoading(true);
+        const result = await sendEmail(email);
+        setIsLoading(false);
+        if (result.success) {
+            showSuccessSwal(result.message, goToLogin);
+        } else {
+            setError(result.message)
         }
     };
 
@@ -44,6 +42,7 @@ function ForgotPassword() {
                 secondaryButtonText="Go back"
                 onSubmit={handleSubmit}
                 onSecondaryButtonClick={goToLogin}
+                isLoading={isLoading}
                 error={error}
             >
                 <Input

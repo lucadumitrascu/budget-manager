@@ -12,7 +12,7 @@ import Input from "../../components/Input";
 function ResetPassword() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [submitClicked, setSubmitClicked] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
     const { goToLogin } = useNavigation();
     const location = useLocation();
@@ -30,15 +30,13 @@ function ResetPassword() {
             return;
         }
 
-        if (!submitClicked) {
-            setSubmitClicked(true);
-            const result = await resetPassword(password, token);
-            if (result.success) {
-                showSuccessSwal(result.message, goToLogin);
-            } else {
-                setError(result.message)
-            }
-            setSubmitClicked(false);
+        setIsLoading(true);
+        const result = await resetPassword(password, token);
+        setIsLoading(false);
+        if (result.success) {
+            showSuccessSwal(result.message, goToLogin);
+        } else {
+            setError(result.message)
         }
     };
 
@@ -48,6 +46,7 @@ function ResetPassword() {
                 title="Reset Password"
                 primaryButtonText="Submit"
                 onSubmit={handleSubmit}
+                isLoading={isLoading}
                 error={error}
             >
                 <Input

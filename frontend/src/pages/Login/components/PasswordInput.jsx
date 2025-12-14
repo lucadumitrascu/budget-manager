@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useNavigation from "../../../hooks/useNavigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./PasswordInput.module.css";
 import inputStyles from "../../../components/Input.module.css";
@@ -12,17 +12,13 @@ const PasswordInput = ({
     autoComplete = "current-password"
 }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
-
-    const handleForgotPasswordClick = () => {
-        navigate("/authentication/forgot-password");
-    };
+    const { goToForgotPassword } = useNavigation();
 
     return (
         <>
             <label className={styles["label-password"]} htmlFor={id}>
                 <p>{label}</p>
-                <button onClick={handleForgotPasswordClick}>
+                <button onClick={goToForgotPassword}>
                     Forgot Password?
                 </button>
             </label>
