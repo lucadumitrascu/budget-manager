@@ -13,7 +13,7 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
-    const { goToDashboard, goToLogin } = useNavigation();
+    const { goToUserDataSetup, goToLogin } = useNavigation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +30,7 @@ function Register() {
         const result = await createAccount(email, password);
         setIsLoading(false);
         if (result.success) {
-            goToDashboard();
+            goToUserDataSetup();
         } else {
             setError(result.message);
         }

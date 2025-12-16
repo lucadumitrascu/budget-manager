@@ -1,6 +1,6 @@
 import styles from "./Input.module.css";
 
-const Input = ({ label, id, autoComplete, type = "text", value, maxLength = 255, onChange }) => {
+const Input = ({ label, id, autoComplete = "off", type = "text", maxLength = 255, placeholder = "", value, onChange, ...rest }) => {
     return (
         <>
             <label className={styles["label"]} htmlFor={id}>{label}</label>
@@ -10,9 +10,11 @@ const Input = ({ label, id, autoComplete, type = "text", value, maxLength = 255,
                 type={type}
                 value={value}
                 onChange={onChange}
+                placeholder={placeholder}
                 autoComplete={autoComplete}
                 maxLength={maxLength}
                 required
+                {...rest}
             />
         </>
     );

@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import UserDataSetup from "./pages/UserDataSetup/UserDataSetup";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/authentication/login" element={<Login />} />
         <Route path="/authentication/register" element={<Register />} />
+        <Route path="/authentication/user-data-setup" element={<UserDataSetup />} />
         <Route path="/authentication/forgot-password" element={<ForgotPassword />} />
         <Route path="/authentication/reset-password" element={<ResetPassword />} />
       </Routes>
