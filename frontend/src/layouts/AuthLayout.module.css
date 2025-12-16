@@ -1,15 +1,16 @@
 .auth-layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
     height: 100vh;
-    gap: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    justify-items: center;
+    align-items: center;
 }
 
 .title {
     font-size: 3.5rem;
     color: #2C3E50;
-    text-align: center;
-    margin: 0;
+    align-self: end;
+    margin-bottom: 2rem;
 }
