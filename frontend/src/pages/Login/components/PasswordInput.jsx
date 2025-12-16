@@ -2,7 +2,7 @@ import { useState } from "react";
 import useNavigation from "../../../hooks/useNavigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./PasswordInput.module.css";
-import inputStyles from "../../../components/Input.module.css";
+import fieldStyles from "../../../components/Field.module.css";
 
 const PasswordInput = ({
     label = "Password",
@@ -25,7 +25,7 @@ const PasswordInput = ({
             <div className={styles["password-container"]}>
                 <input
                     id={id}
-                    className={`${styles["password-input"]} ${inputStyles["input"]}`}
+                    className={`${styles["password-input"]} ${fieldStyles["input"]}`}
                     type={showPassword ? "text" : "password"}
                     value={value}
                     onChange={onChange}

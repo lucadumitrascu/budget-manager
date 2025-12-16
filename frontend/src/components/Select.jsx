@@ -1,5 +1,5 @@
 import { CURRENCY_OPTIONS } from "../utils/constants";
-import styles from "./Input.module.css";
+import styles from "./Field.module.css";
 
 const Select = ({
     label,
