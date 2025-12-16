@@ -4,16 +4,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserCredentialsDto;
+import ro.budgetmanager.entity.FinancialInfo;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.repository.UserRepository;
 import ro.budgetmanager.security.JwtTokenGenerator;
 
+import java.math.BigDecimal;
 import java.util.Optional;
+
+import static ro.budgetmanager.util.ApiUtils.buildResponse;
 
 @Service
 public class AuthService {
@@ -69,7 +75,7 @@ public class AuthService {
 
         emailService.sendEmail(email, subject, body);
 
-        return buildResponse("Password reset link sent successfully.", null, HttpStatus.OK);
+        return buildResponse("Password reset link has been sent successfully.", null, HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<String>> resetPassword(String authHeader, String newPassword) {
@@ -88,7 +94,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        return buildResponse("Password has been successfully reset.", null, HttpStatus.OK);
+        return buildResponse("Password has been reset successfully.", null, HttpStatus.OK);
     }
 
     private ResponseEntity<ApiResponseDto<String>> authenticateUserAndGenerateToken(String email, String password, HttpStatus successStatus, String errorMessage) {
@@ -103,16 +109,20 @@ public class AuthService {
         }
     }
 
-    private ResponseEntity<ApiResponseDto<String>> buildResponse(String message, String data, HttpStatus status) {
-        ApiResponseDto<String> response = new ApiResponseDto<>(message, data);
-        return ResponseEntity.status(status).body(response);
-    }
-
     private void createAccount(String email, String password) {
         User newUser = new User();
         newUser.setUsername(null);
         newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
+
+        FinancialInfo financialInfo = new FinancialInfo();
+        financialInfo.setBudget(BigDecimal.ZERO);
+        financialInfo.setCurrency("RON");
+        financialInfo.setSalary(BigDecimal.ZERO);
+        financialInfo.setSalaryDay(0);
+        financialInfo.setUser(newUser);
+
+        newUser.setFinancialInfo(financialInfo);
         userRepository.save(newUser);
     }
 }

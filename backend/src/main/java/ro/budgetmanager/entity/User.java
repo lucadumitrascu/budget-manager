@@ -16,13 +16,17 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    public User(String username, String email, String password) {
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private FinancialInfo financialInfo;
+
+    public User(String username, String email, String password, FinancialInfo financialInfo) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.financialInfo = financialInfo;
     }
 
     public User() {
@@ -59,5 +63,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public FinancialInfo getFinancialInfo() {
+        return financialInfo;
+    }
+
+    public void setFinancialInfo(FinancialInfo financialInfo) {
+        this.financialInfo = financialInfo;
     }
 }
