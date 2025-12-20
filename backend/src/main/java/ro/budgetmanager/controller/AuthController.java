@@ -3,10 +3,7 @@ package ro.budgetmanager.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.budgetmanager.dto.ApiResponseDto;
-import ro.budgetmanager.dto.EmailDto;
-import ro.budgetmanager.dto.PasswordDto;
-import ro.budgetmanager.dto.UserCredentialsDto;
+import ro.budgetmanager.dto.*;
 import ro.budgetmanager.service.AuthService;
 
 @RestController
@@ -38,5 +35,10 @@ public class AuthController {
     public ResponseEntity<ApiResponseDto<String>> resetPassword(@RequestHeader("Authorization") String authHeader,
                                                                 @Valid @RequestBody PasswordDto passwordDto) {
         return authService.resetPassword(authHeader, passwordDto.getPassword());
+    }
+
+    @PostMapping("/google-login")
+    public ResponseEntity<ApiResponseDto<String>> googleLogin(@RequestBody GoogleLoginDto googleLoginDto) {
+        return authService.googleLogin(googleLoginDto.getAuthCode());
     }
 }

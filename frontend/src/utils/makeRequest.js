@@ -15,7 +15,10 @@ export const makeRequest = async (baseUrl, endpoint, method = "POST", body = nul
         const responseData = await response.json();
 
         if (response.status === 200 || response.status === 201) {
-            return { success: true, message: responseData.message, data: responseData.data };
+            return {
+                success: true, message: responseData.message,
+                data: responseData.data, status: response.status
+            };
         } else {
             return { success: false, message: responseData.message || "Something went wrong." };
         }

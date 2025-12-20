@@ -1,3 +1,4 @@
+import GoogleLoginButton from "./GoogleLoginButton";
 import { PulseLoader } from "react-spinners";
 import styles from "./AuthForm.module.css";
 
@@ -9,6 +10,7 @@ const AuthForm = ({
     onSecondaryButtonClick,
     isLoading = false,
     error,
+    containsGoogleLoginButton = false,
     children
 }) => {
     return (
@@ -31,6 +33,7 @@ const AuthForm = ({
                     </button>
                 )}
             </div>
+            {containsGoogleLoginButton && <GoogleLoginButton />}
         </form>
     );
 };

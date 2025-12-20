@@ -2,7 +2,7 @@ import { useState } from "react";
 import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { sendEmail } from "../../services/authService";
-import { showSuccessSwal } from "../../utils/swal";
+import { showErrorSwal, showSuccessSwal } from "../../utils/swal";
 import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
 import AuthForm from "../../components/AuthForm";
@@ -30,7 +30,7 @@ function ForgotPassword() {
         if (result.success) {
             showSuccessSwal(result.message, goToLogin);
         } else {
-            setError(result.message)
+            showErrorSwal(result.message)
         }
     };
 

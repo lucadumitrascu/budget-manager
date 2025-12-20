@@ -1,6 +1,7 @@
 package ro.budgetmanager.entity;
 
 import jakarta.persistence.*;
+import ro.budgetmanager.enums.AuthProvider;
 
 @Entity
 @Table(name = "user")
@@ -16,16 +17,22 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AuthProvider authProvider;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private FinancialInfo financialInfo;
 
-    public User(String username, String email, String password, FinancialInfo financialInfo) {
+    public User(String username, String email, String password,
+                AuthProvider authProvider, FinancialInfo financialInfo) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.authProvider = authProvider;
         this.financialInfo = financialInfo;
     }
 
@@ -63,6 +70,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public AuthProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthProvider authProvider) {
+        this.authProvider = authProvider;
     }
 
     public FinancialInfo getFinancialInfo() {

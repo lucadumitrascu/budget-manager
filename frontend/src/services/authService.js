@@ -24,3 +24,11 @@ export const sendEmail = (email) => {
 export const resetPassword = (password, token) => {
     return makeRequest(API_BASE_URL, "/reset-password", "PUT", { password }, token);
 };
+
+export const googleLogin = async (authCode) => {
+    const result = await makeRequest(API_BASE_URL, "/google-login", "POST", { authCode });
+    if (result.success) {
+        localStorage.setItem("jwtToken", result.data);
+    }
+    return result;
+};

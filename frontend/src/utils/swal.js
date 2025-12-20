@@ -26,3 +26,17 @@ export const showSuccessSwal = (text = "", callback = null) => {
         if (callback) callback();
     });
 };
+
+export const showErrorSwal = (text = "", callback = null) => {
+    MySwal.fire({
+        icon: "error",
+        title: "Error",
+        text,
+        confirmButtonText: "Close",
+        confirmButtonColor: "#E74C3C",
+        customClass: customSwalClasses,
+        allowOutsideClick: false,
+    }).then(() => {
+        if (callback) callback();
+    });
+};

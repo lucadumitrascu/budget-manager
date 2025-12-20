@@ -49,3 +49,16 @@
     color: #E74C3C;
     text-align: center;
 }
+
+.google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.google-icon {
+    font-size: 1.1rem;
+    margin-right: 0.3rem;
+    padding: 0;
+}

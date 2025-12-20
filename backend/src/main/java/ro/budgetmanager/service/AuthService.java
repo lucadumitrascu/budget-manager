@@ -1,18 +1,18 @@
 package ro.budgetmanager.service;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserCredentialsDto;
 import ro.budgetmanager.entity.FinancialInfo;
 import ro.budgetmanager.entity.User;
+import ro.budgetmanager.enums.AuthProvider;
 import ro.budgetmanager.repository.UserRepository;
 import ro.budgetmanager.security.JwtTokenGenerator;
 
@@ -29,17 +29,21 @@ public class AuthService {
     private final JwtTokenGenerator jwtTokenGenerator;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final GoogleService googleService;
 
-    public AuthService(UserRepository userRepository,
-                       AuthenticationManager authenticationManager,
-                       JwtTokenGenerator jwtTokenGenerator,
-                       PasswordEncoder passwordEncoder,
-                       EmailService emailService) {
+    public AuthService(
+            UserRepository userRepository,
+            AuthenticationManager authenticationManager,
+            JwtTokenGenerator jwtTokenGenerator,
+            PasswordEncoder passwordEncoder,
+            EmailService emailService,
+            GoogleService googleService) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtTokenGenerator = jwtTokenGenerator;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.googleService = googleService;
     }
 
     public ResponseEntity<ApiResponseDto<String>> login(UserCredentialsDto userCredentialsDto) {
@@ -51,9 +55,34 @@ public class AuthService {
         if (userRepository.existsByEmail(userCredentialsDto.getEmail())) {
             return buildResponse("Email is already in use.", null, HttpStatus.BAD_REQUEST);
         }
-        createAccount(userCredentialsDto.getEmail(), userCredentialsDto.getPassword());
+        createAccount(userCredentialsDto.getEmail(), userCredentialsDto.getPassword(), AuthProvider.LOCAL);
         return authenticateUserAndGenerateToken(userCredentialsDto.getEmail(), userCredentialsDto.getPassword(),
                 HttpStatus.CREATED, "Authentication failed after registration.");
+    }
+
+    public ResponseEntity<ApiResponseDto<String>> googleLogin(String authCode) {
+        try {
+            GoogleIdToken.Payload payload = googleService.getPayloadFromAuthCode(authCode);
+            String email = payload.getEmail();
+            Optional<User> userOpt = userRepository.findByEmail(email);
+
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+                if (user.getAuthProvider() == AuthProvider.LOCAL) {
+                    return buildResponse("This email is already registered with a password. " +
+                            "Please use standard login to continue.", null, HttpStatus.BAD_REQUEST);
+                }
+
+                return authenticateUserAndGenerateToken(email, null,
+                        HttpStatus.OK, "Google login failed.");
+            }
+
+            createAccount(email, null, AuthProvider.GOOGLE);
+            return authenticateUserAndGenerateToken(email, null,
+                    HttpStatus.CREATED, "Registration with Google account failed.");
+        } catch (RuntimeException e) {
+            return buildResponse("Google login failed.", null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<ApiResponseDto<String>> forgotPassword(String email) {
@@ -63,6 +92,10 @@ public class AuthService {
         }
 
         User user = userOptional.get();
+        if (user.getAuthProvider() == AuthProvider.GOOGLE) {
+            return buildResponse("Password reset is not available for accounts registered via Google.", null, HttpStatus.NOT_FOUND);
+        }
+
         String token = jwtTokenGenerator.generateToken(user.getEmail(), true);
 
         String resetLink = "http://localhost:5173/authentication/reset-password?token=" + token;
@@ -99,7 +132,9 @@ public class AuthService {
 
     private ResponseEntity<ApiResponseDto<String>> authenticateUserAndGenerateToken(String email, String password, HttpStatus successStatus, String errorMessage) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            if (password != null) {
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            }
             String token = jwtTokenGenerator.generateToken(email, false);
             return buildResponse(null, token, successStatus);
         } catch (AuthenticationException e) {
@@ -109,11 +144,14 @@ public class AuthService {
         }
     }
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, AuthProvider authProvider) {
         User newUser = new User();
         newUser.setUsername(null);
         newUser.setEmail(email);
-        newUser.setPassword(passwordEncoder.encode(password));
+        if (password != null) {
+            newUser.setPassword(passwordEncoder.encode(password));
+        }
+        newUser.setAuthProvider(authProvider);
 
         FinancialInfo financialInfo = new FinancialInfo();
         financialInfo.setBudget(BigDecimal.ZERO);

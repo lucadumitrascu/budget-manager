@@ -45,6 +45,7 @@ function Register() {
                 onSecondaryButtonClick={goToLogin}
                 isLoading={isLoading}
                 error={error}
+                containsGoogleLoginButton={true}
             >
                 <Input
                     label={"Email"} id="email" autoComplete="email" type="text"

@@ -49,6 +49,7 @@ function ResetPassword() {
                 isLoading={isLoading}
                 error={error}
             >
+                <input type="email" name="username" autoComplete="username" style={{ display: "none" }} />
                 <Input
                     label="Password" id="password" autoComplete="new-password" type="password"
                     maxLength="60" value={password} onChange={(e) => setPassword(e.target.value)} />
