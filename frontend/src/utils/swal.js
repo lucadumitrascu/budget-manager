@@ -40,3 +40,22 @@ export const showErrorSwal = (text = "", callback = null) => {
         if (callback) callback();
     });
 };
+
+export const showAreYouSureSwal = (text = "", callback = null) => {
+    MySwal.fire({
+        icon: "warning",
+        title: "Are you sure?",
+        text,
+        showCancelButton: true,
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#2ECC71",
+        cancelButtonText: "Cancel",
+        cancelButtonColor: "#E74C3C",
+        customClass: customSwalClasses,
+        allowOutsideClick: false,
+    }).then((result) => {
+        if (result.isConfirmed && callback) {
+            callback();
+        }
+    });
+};

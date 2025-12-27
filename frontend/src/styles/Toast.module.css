@@ -1,0 +1,7 @@
+.toast {
+    background-color: #2C3E50;
+    width: max-content;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 8px;
+}

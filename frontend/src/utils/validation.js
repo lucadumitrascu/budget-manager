@@ -15,7 +15,7 @@ export const validateEmail = (email) => {
     return null;
 };
 
-const isWithinNumericLimits = (num) => {
+export const isWithinNumericLimits = (num) => {
     if (isNaN(num) || num > MAX_NUMBER_LIMIT || num < MIN_NUMBER_LIMIT) {
         return false;
     }
@@ -29,3 +29,20 @@ export const validateNumericField = (value, label) => {
     return null;
 };
 
+export const validateUniqueTextField = (value, existingItems, label) => {
+    const trimmedValue = value?.trim().toLowerCase();
+    if (!trimmedValue) return `${label} name cannot be empty.`;
+
+    const alreadyExists = existingItems.some(
+        (item) => item.name === trimmedValue
+    );
+
+    if (alreadyExists) {
+        return `A ${label} with this name already exists.`;
+    }
+    return null;
+};
+
+export const hasChanges = (a, b) => {
+    return Object.keys(a).some(key => `${a[key]}` !== `${b[key]}`);
+};

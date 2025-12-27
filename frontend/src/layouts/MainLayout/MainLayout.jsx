@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import VerticalNavbar from "./components/VerticalNavbar";
 import Header from "./components/Header";
 import styles from "./MainLayout.module.css";
@@ -13,6 +14,7 @@ const MainLayout = ({ title, children }) => {
                     {children}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };
