@@ -3,7 +3,7 @@ import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { authenticateUser } from "../../services/authService";
 import { validateEmail } from "../../utils/validation";
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import PasswordInput from "./components/PasswordInput";

@@ -5,7 +5,7 @@ import useError from "../../hooks/useError";
 import { resetPassword } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
 import { validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 

@@ -3,7 +3,7 @@ import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
 import { saveFinancialInfo } from "../../services/financialInfoService";
 import { showSuccessSwal } from "../../utils/swal";
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import UsernameForm from "./components/UsernameForm";
 import SalaryForm from "./components/SalaryForm";
 import BudgetForm from "./components/BudgetForm";

@@ -4,7 +4,7 @@ import useError from "../../hooks/useError";
 import { sendEmail } from "../../services/authService";
 import { showErrorSwal, showSuccessSwal } from "../../utils/swal";
 import { validateEmail } from "../../utils/validation";
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 

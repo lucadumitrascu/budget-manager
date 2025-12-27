@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6c7680;
+    padding: 0.3rem 1rem;
+    color: #f0f0f0;
+}
+
+.span-username {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.span-page-title {
+    min-width: 11rem;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
