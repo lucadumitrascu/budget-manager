@@ -10,6 +10,8 @@ import ro.budgetmanager.entity.FinancialInfo;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.repository.FinancialInfoRepository;
 
+import java.math.BigDecimal;
+
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
 
 @Service
@@ -45,5 +47,10 @@ public class FinancialInfoService {
         financialInfoRepository.save(financialInfo);
 
         return buildResponse("Financial information has been updated successfully.", null, HttpStatus.OK);
+    }
+
+    protected void adjustUserBudget(User user, BigDecimal amountChange) {
+        user.getFinancialInfo().setBudget(user.getFinancialInfo().getBudget().add(amountChange));
+        financialInfoRepository.save(user.getFinancialInfo());
     }
 }
