@@ -28,6 +28,8 @@ const useLoadDataByPage = (page = "") => {
     };
 
     useEffect(() => {
+        if (!token) return;
+
         const shouldFetchByPage = {
             expenses: isEmpty(expenses) || isEmpty(categories),
         };

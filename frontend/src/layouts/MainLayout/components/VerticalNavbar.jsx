@@ -1,8 +1,10 @@
 import styles from "./VerticalNavbar.module.css";
 import useNavigation from "../../../hooks/useNavigation";
+import useLogoutUser from "../../../hooks/useLogoutUser";
 
 const VerticalNavbar = () => {
     const { goToDashboard, goToExpenses } = useNavigation();
+    const logoutUser = useLogoutUser();
 
     return (
         <div className={styles["vertical-navbar"]}>
@@ -16,7 +18,7 @@ const VerticalNavbar = () => {
                 </button>
             </div>
             <div className={styles["div-buttons"]}>
-                <button className={styles["logout-button"]}>
+                <button className={styles["logout-button"]} onClick={logoutUser}>
                     Logout
                 </button>
             </div>
