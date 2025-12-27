@@ -2,10 +2,7 @@ package ro.budgetmanager.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserDto;
 import ro.budgetmanager.service.UserService;
@@ -18,6 +15,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponseDto<UserDto>> getUserData() {
+        return userService.getUserData();
     }
 
     @PutMapping("/me/username")

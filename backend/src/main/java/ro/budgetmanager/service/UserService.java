@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserDto;
 import ro.budgetmanager.entity.User;
+import ro.budgetmanager.mapper.UserMapper;
 import ro.budgetmanager.repository.UserRepository;
 
 import java.util.Optional;
@@ -16,12 +17,21 @@ import static ro.budgetmanager.util.ApiUtils.buildResponse;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final AuthService authService;
 
     public UserService(UserRepository userRepository,
+                       UserMapper userMapper,
                        AuthService authService) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
         this.authService = authService;
+    }
+
+    public ResponseEntity<ApiResponseDto<UserDto>> getUserData() {
+        User user = authService.getAuthenticatedUser();
+        UserDto userDto = userMapper.toUserDto(user);
+        return buildResponse("User data have been successfully retrieved.", userDto, HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<String>> updateUsername(UserDto userDto) {
