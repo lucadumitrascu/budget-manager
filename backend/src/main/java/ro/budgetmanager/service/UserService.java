@@ -10,20 +10,22 @@ import ro.budgetmanager.repository.UserRepository;
 
 import java.util.Optional;
 
-import static ro.budgetmanager.util.ApiUtils.getAuthenticatedUser;
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AuthService authService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       AuthService authService) {
         this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     public ResponseEntity<ApiResponseDto<String>> updateUsername(UserDto userDto) {
-        User user = getAuthenticatedUser(userRepository);
+        User user = authService.getAuthenticatedUser();
 
         String username = userDto.getUsername().trim();
         Optional<User> existingUser = userRepository.findByUsername(username);

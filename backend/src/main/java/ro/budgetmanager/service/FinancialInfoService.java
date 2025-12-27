@@ -9,26 +9,24 @@ import ro.budgetmanager.dto.FinancialInfoDto;
 import ro.budgetmanager.entity.FinancialInfo;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.repository.FinancialInfoRepository;
-import ro.budgetmanager.repository.UserRepository;
 
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
-import static ro.budgetmanager.util.ApiUtils.getAuthenticatedUser;
 
 @Service
 public class FinancialInfoService {
 
     private final FinancialInfoRepository financialInfoRepository;
-    private final UserRepository userRepository;
+    private final AuthService authService;
 
     public FinancialInfoService(FinancialInfoRepository financialInfoRepository,
-                                UserRepository userRepository) {
+                                AuthService authService) {
         this.financialInfoRepository = financialInfoRepository;
-        this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     @Transactional
     public ResponseEntity<ApiResponseDto<String>> updateFinancialInfo(FinancialInfoDto financialInfoDto) {
-        User user = getAuthenticatedUser(userRepository);
+        User user = authService.getAuthenticatedUser();
         FinancialInfo financialInfo = user.getFinancialInfo();
 
         if (financialInfoDto.getBudget() != null) {
