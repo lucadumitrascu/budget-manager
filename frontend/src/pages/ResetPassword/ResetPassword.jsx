@@ -6,7 +6,7 @@ import { resetPassword } from "../../services/authService";
 import { showSuccessSwal } from "../../utils/swal";
 import { validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import Form from "../../components/Form";
 import Input from "../../components/Input";
 
 function ResetPassword() {
@@ -42,11 +42,10 @@ function ResetPassword() {
 
     return (
         <AuthLayout>
-            <AuthForm
+            <Form
                 title="Reset Password"
-                primaryButtonText="Submit"
                 onSubmit={handleSubmit}
-                isLoading={isLoading}
+                primaryButton={{ text: "Submit", isLoading: isLoading }}
                 error={error}
             >
                 <input type="email" name="username" autoComplete="username" style={{ display: "none" }} />
@@ -56,7 +55,7 @@ function ResetPassword() {
                 <Input
                     label="Confirm Password" id="confirm-password" autoComplete="new-password" type="password"
                     maxLength="60" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            </AuthForm>
+            </Form>
         </AuthLayout>
     );
 }

@@ -5,7 +5,7 @@ import { sendEmail } from "../../services/authService";
 import { showErrorSwal, showSuccessSwal } from "../../utils/swal";
 import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import Form from "../../components/Form";
 import Input from "../../components/Input";
 
 function ForgotPassword() {
@@ -36,19 +36,17 @@ function ForgotPassword() {
 
     return (
         <AuthLayout>
-            <AuthForm
+            <Form
                 title="Forgot Password"
-                primaryButtonText="Submit"
-                secondaryButtonText="Go back"
                 onSubmit={handleSubmit}
-                onSecondaryButtonClick={goToLogin}
-                isLoading={isLoading}
+                primaryButton={{ text: "Submit", isLoading: isLoading }}
+                secondaryButton={{ text: "Go back", onClick: goToLogin }}
                 error={error}
             >
                 <Input
                     label="Email" id="email" autoComplete="email" type="text"
                     value={email} onChange={(e) => setEmail(e.target.value)} />
-            </AuthForm>
+            </Form>
         </AuthLayout>
     );
 }

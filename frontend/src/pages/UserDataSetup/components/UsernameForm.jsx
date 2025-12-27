@@ -2,7 +2,7 @@ import { useState } from "react";
 import useError from "../../../hooks/useError";
 import { saveUsername } from "../../../services/userService";
 import { showSuccessSwal } from "../../../utils/swal";
-import AuthForm from "../../../components/AuthForm";
+import Form from "../../../components/Form";
 import Input from "../../../components/Input";
 import ProgressBar from "./ProgressBar";
 
@@ -32,18 +32,17 @@ const UsernameForm = ({
     };
 
     return (
-        <AuthForm
+        <Form
             title="Complete your account setup"
-            primaryButtonText="Submit"
             onSubmit={handleSubmit}
-            isLoading={isLoading}
+            primaryButton={{ text: "Next", isLoading: isLoading }}
             error={error}
         >
             <ProgressBar step={step} />
             <Input
                 label="Username" id="username" autoComplete="username" type="text"
                 maxLength="50" placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </AuthForm>
+        </Form>
     );
 }
 

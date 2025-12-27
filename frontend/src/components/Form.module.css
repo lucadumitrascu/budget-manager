@@ -1,4 +1,4 @@
-.auth-form {
+.form {
     background-color: #2C3E50;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -7,20 +7,25 @@
     padding: 1.5rem;
 }
 
-.auth-form h2 {
+.form h2 {
     color: white;
     font-size: 1.4rem;
     margin: 0 0 1rem 0;
 }
 
-.auth-buttons {
+.form h2.centered {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.form-buttons {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     margin-top: 0.25rem;
 }
 
-.auth-form button {
+.form button {
     font-weight: bold;
     font-size: 0.85rem;
     border: none;
@@ -32,16 +37,27 @@
     color: #ECF0F1;
 }
 
-.auth-form button[type="button"] {
+.form button[type="button"] {
     background-color: #ECF0F1;
     color: #2ECC71;
 }
 
-.auth-form button:hover {
+.form button[type="button"].secondary-button {
+    background-color: #F39C12;
+    color: white;
+}
+
+.form button[type="button"].tertiary-button {
+    border: 0.1rem solid grey;
+    background-color: #2C3E50;
+    color: white;
+}
+
+.form button:hover {
     opacity: 0.85;
 }
 
-.auth-error {
+.form-error {
     display: block;
     margin-bottom: 1rem;
     font-weight: bold;

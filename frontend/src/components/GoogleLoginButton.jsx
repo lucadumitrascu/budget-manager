@@ -3,7 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { googleLogin } from "../services/authService";
 import { showErrorSwal } from "../utils/swal";
 import { FcGoogle } from "react-icons/fc";
-import styles from "./AuthForm.module.css";
+import styles from "./Form.module.css";
 
 const GoogleLoginButton = () => {
 

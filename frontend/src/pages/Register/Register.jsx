@@ -4,7 +4,7 @@ import useError from "../../hooks/useError";
 import { createAccount } from "../../services/authService";
 import { validateEmail, validatePasswordLength, validatePasswordMatch } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import Form from "../../components/Form";
 import Input from "../../components/Input";
 
 function Register() {
@@ -38,12 +38,11 @@ function Register() {
 
     return (
         <AuthLayout>
-            <AuthForm
-                primaryButtonText="Register"
-                secondaryButtonText="Login"
+            <Form
+                title="Register"
                 onSubmit={handleSubmit}
-                onSecondaryButtonClick={goToLogin}
-                isLoading={isLoading}
+                primaryButton={{ text: "Register", isLoading: isLoading }}
+                secondaryButton={{ text: "Login", onClick: goToLogin }}
                 error={error}
                 containsGoogleLoginButton={true}
             >
@@ -56,7 +55,7 @@ function Register() {
                 <Input
                     label={"Confirm Password"} id="confirm-password" autoComplete="new-password" type="password"
                     maxLength="60" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            </AuthForm>
+            </Form>
         </AuthLayout>
     );
 }

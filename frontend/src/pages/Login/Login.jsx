@@ -4,7 +4,7 @@ import useError from "../../hooks/useError";
 import { authenticateUser } from "../../services/authService";
 import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import Form from "../../components/Form";
 import Input from "../../components/Input";
 import PasswordInput from "./components/PasswordInput";
 
@@ -36,12 +36,11 @@ function Login() {
 
     return (
         <AuthLayout>
-            <AuthForm
-                primaryButtonText="Login"
-                secondaryButtonText="Register"
+            <Form
+                title="Login"
                 onSubmit={handleSubmit}
-                onSecondaryButtonClick={goToRegister}
-                isLoading={isLoading}
+                primaryButton={{ text: "Login", isLoading: isLoading }}
+                secondaryButton={{ text: "Register", onClick: goToRegister }}
                 error={error}
                 containsGoogleLoginButton={true}
             >
@@ -49,7 +48,7 @@ function Login() {
                     label={"Email"} id="email" autoComplete="email" type="text"
                     value={email} onChange={(e) => setEmail(e.target.value)} />
                 <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
-            </AuthForm>
+            </Form>
         </AuthLayout>
     );
 }

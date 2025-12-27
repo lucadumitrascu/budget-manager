@@ -1,6 +1,6 @@
 import useError from "../../../hooks/useError";
 import { validateNumericField } from "../../../utils/validation";
-import AuthForm from "../../../components/AuthForm";
+import Form from "../../../components/Form";
 import Input from "../../../components/Input";
 import ProgressBar from "./ProgressBar";
 
@@ -33,12 +33,11 @@ const SalaryForm = ({
     }
 
     return (
-        <AuthForm
+        <Form
             title="Complete your account setup"
-            primaryButtonText="Submit"
-            secondaryButtonText="I don't have a salary"
             onSubmit={handleSubmit}
-            onSecondaryButtonClick={handleNoSalary}
+            primaryButton={{ text: "Next", isLoading: false }}
+            secondaryButton={{ text: "I don't have a salary", onClick: handleNoSalary }}
             error={error}
         >
             <ProgressBar step={step} />
@@ -48,7 +47,7 @@ const SalaryForm = ({
             <Input label="Salary Day" id="salaryDay" type="number" min="1" max="31"
                 placeholder="Enter day (1-31)" value={salaryDay} onChange={(e) => setSalaryDay(Number(e.target.value))}
             />
-        </AuthForm>
+        </Form>
     );
 };
 

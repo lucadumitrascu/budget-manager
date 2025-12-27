@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { validateNumericField } from "../../../utils/validation";
-import AuthForm from "../../../components/AuthForm";
+import Form from "../../../components/Form";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import ProgressBar from "./ProgressBar";
@@ -31,11 +31,10 @@ const BudgetForm = ({
     }
 
     return (
-        <AuthForm
+        <Form
             title="Complete your account setup"
-            primaryButtonText="Finish"
             onSubmit={handleSubmit}
-            isLoading={isLoading}
+            primaryButton={{ text: "Finish", isLoading: isLoading }}
             error={error}
         >
             <ProgressBar step={3} />
@@ -45,7 +44,7 @@ const BudgetForm = ({
             <Select label="Currency" id="currency" value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
             />
-        </AuthForm>
+        </Form>
     );
 };
 
