@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useNavigation from "../../hooks/useNavigation";
 import useError from "../../hooks/useError";
+import useRedirectIfAuthenticated from "../../hooks/useRedirectIfAuthenticated";
 import { authenticateUser } from "../../services/authService";
 import { validateEmail } from "../../utils/validation";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
@@ -14,6 +15,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useError();
     const { goToDashboard, goToRegister } = useNavigation();
+    useRedirectIfAuthenticated();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
