@@ -12,7 +12,6 @@ public class ExpenseMapper {
 
     public Expense toExpense(ExpenseDto expenseDto, Category category) {
         Expense expense = new Expense();
-        expense.setId(expenseDto.getId());
         expense.setAmount(expenseDto.getAmount());
         expense.setCategory(category);
         expense.setDescription(expenseDto.getDescription());

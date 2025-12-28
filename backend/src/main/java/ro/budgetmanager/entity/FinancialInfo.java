@@ -28,17 +28,21 @@ public class FinancialInfo {
     @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories;
 
+    @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IncomeSource> incomeSources;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public FinancialInfo(BigDecimal budget, String currency, BigDecimal salary,
-                         Integer salaryDay, List<Category> categories, User user) {
+    public FinancialInfo(BigDecimal budget, String currency, BigDecimal salary, Integer salaryDay,
+                         List<Category> categories, List<IncomeSource> incomeSources, User user) {
         this.budget = budget;
         this.currency = currency;
         this.salary = salary;
         this.salaryDay = salaryDay;
         this.categories = categories;
+        this.incomeSources = incomeSources;
         this.user = user;
     }
 
@@ -92,6 +96,14 @@ public class FinancialInfo {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<IncomeSource> getIncomeSources() {
+        return incomeSources;
+    }
+
+    public void setIncomeSources(List<IncomeSource> incomeSources) {
+        this.incomeSources = incomeSources;
     }
 
     public User getUser() {
