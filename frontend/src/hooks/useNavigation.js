@@ -10,6 +10,7 @@ const useNavigation = () => {
         goToForgotPassword: () => navigate("/authentication/forgot-password"),
         goToDashboard: () => navigate("/dashboard"),
         goToExpenses: () => navigate("/expenses"),
+        goToIncomes: () => navigate("/incomes"),
     };
 };
 

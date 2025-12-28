@@ -49,18 +49,18 @@ const CategoryModal = ({
             const updatedCategory = {
                 id: category.id,
                 createdAt: category.createdAt,
-                name: categoryName
+                name: categoryName.trim()
             };
             result = await updateCategory(updatedCategory, token);
             if (result.success) {
                 dispatch(updateCategoryAction(updatedCategory));
                 dispatch(updateCategoryInExpensesAction({
                     oldCategory: oldCategoryName,
-                    newCategory: categoryName
+                    newCategory: updatedCategory.name
                 }));
             }
         } else {
-            result = await addCategory(categoryName, token);
+            result = await addCategory(categoryName.trim(), token);
             if (result.success) {
                 dispatch(addCategoryAction(result.data));
             }

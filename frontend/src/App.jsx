@@ -7,6 +7,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import UserDataSetup from "./pages/UserDataSetup/UserDataSetup";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Expenses from "./pages/Expenses/Expenses";
+import Incomes from "./pages/Incomes/Incomes";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/authentication/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/expenses" element={<Expenses />} />
+        <Route path="/incomes" element={<Incomes />} />
       </Routes>
     </Router>
   );

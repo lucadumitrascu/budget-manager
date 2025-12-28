@@ -87,13 +87,20 @@
 .expense-table th:nth-child(3),
 .expense-table th:nth-child(5),
 .category-table th:nth-child(2),
-.category-table th:nth-child(3) {
+.category-table th:nth-child(3),
+.income-table th:nth-child(2),
+.income-table th:nth-child(3),
+.income-table th:nth-child(4),
+.income-source-table th:nth-child(2),
+.income-source-table th:nth-child(3) {
     cursor: pointer;
 }
 
 .expense-table td:nth-child(3),
 .expense-table td:nth-child(4),
-.category-table td:nth-child(2) {
+.category-table td:nth-child(2),
+.income-table td:nth-child(3),
+.income-source-table td:nth-child(2) {
     max-width: 10rem;
     width: max-content;
     overflow: hidden;
@@ -104,11 +111,14 @@
 
 .expense-table td:nth-child(3).expanded,
 .expense-table td:nth-child(4).expanded,
-.category-table td:nth-child(2).expanded {
+.category-table td:nth-child(2).expanded,
+.income-table td:nth-child(3).expanded,
+.income-source-table td:nth-child(2).expanded {
     white-space: normal;
 }
 
-.category-table td:not(:first-child) {
+.category-table td:not(:first-child),
+.income-source-table td:not(:first-child) {
     max-width: 5rem;
     width: 5rem;
 }
