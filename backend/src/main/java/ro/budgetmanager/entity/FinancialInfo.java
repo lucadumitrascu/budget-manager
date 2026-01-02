@@ -22,7 +22,7 @@ public class FinancialInfo {
     @Column(nullable = false)
     private BigDecimal salary;
 
-    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
+    @Column(nullable = false)
     private Integer salaryDay;
 
     @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -31,18 +31,22 @@ public class FinancialInfo {
     @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IncomeSource> incomeSources;
 
+    @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Goal> goals;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public FinancialInfo(BigDecimal budget, String currency, BigDecimal salary, Integer salaryDay,
-                         List<Category> categories, List<IncomeSource> incomeSources, User user) {
+                         List<Category> categories, List<IncomeSource> incomeSources, List<Goal> goals, User user) {
         this.budget = budget;
         this.currency = currency;
         this.salary = salary;
         this.salaryDay = salaryDay;
         this.categories = categories;
         this.incomeSources = incomeSources;
+        this.goals = goals;
         this.user = user;
     }
 
@@ -104,6 +108,14 @@ public class FinancialInfo {
 
     public void setIncomeSources(List<IncomeSource> incomeSources) {
         this.incomeSources = incomeSources;
+    }
+
+    public List<Goal> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<Goal> goals) {
+        this.goals = goals;
     }
 
     public User getUser() {
