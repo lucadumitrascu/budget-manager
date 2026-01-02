@@ -62,7 +62,7 @@ function UserDataSetup() {
                     step={step}
                     error={error}
                     setError={setError}
-                    handleSubmitFinancialInfo={handleSubmitFinancialInfo} />
+                    onSubmitFinancialInfo={handleSubmitFinancialInfo} />
             }
         </AuthLayout>
     );

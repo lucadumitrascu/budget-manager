@@ -51,10 +51,10 @@ function ResetPassword() {
                 <input type="email" name="username" autoComplete="username" style={{ display: "none" }} />
                 <Input
                     label="Password" id="password" autoComplete="new-password" type="password"
-                    maxLength="60" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    maxLength={60} value={password} onChange={(e) => setPassword(e.target.value)} />
                 <Input
                     label="Confirm Password" id="confirm-password" autoComplete="new-password" type="password"
-                    maxLength="60" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                    maxLength={60} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </Form>
         </AuthLayout>
     );

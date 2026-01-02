@@ -49,14 +49,14 @@ function Register() {
                 containsGoogleLoginButton={true}
             >
                 <Input
-                    label={"Email"} id="email" autoComplete="email" type="text"
+                    label="Email" id="email" autoComplete="email" type="text"
                     value={email} onChange={(e) => setEmail(e.target.value)} />
                 <Input
-                    label={"Password"} id="password" autoComplete="new-password" type="password"
-                    maxLength="60" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    label="Password" id="password" autoComplete="new-password" type="password"
+                    maxLength={60} value={password} onChange={(e) => setPassword(e.target.value)} />
                 <Input
-                    label={"Confirm Password"} id="confirm-password" autoComplete="new-password" type="password"
-                    maxLength="60" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                    label="Confirm Password" id="confirm-password" autoComplete="new-password" type="password"
+                    maxLength={60} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </Form>
         </AuthLayout>
     );

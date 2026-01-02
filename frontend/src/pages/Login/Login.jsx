@@ -47,7 +47,7 @@ function Login() {
                 containsGoogleLoginButton={true}
             >
                 <Input
-                    label={"Email"} id="email" autoComplete="email" type="text"
+                    label="Email" id="email" autoComplete="email" type="text"
                     value={email} onChange={(e) => setEmail(e.target.value)} />
                 <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form>

@@ -12,7 +12,7 @@ const BudgetForm = ({
     setCurrency,
     error,
     setError,
-    handleSubmitFinancialInfo,
+    onSubmitFinancialInfo,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +26,7 @@ const BudgetForm = ({
         }
 
         setIsLoading(true);
-        await handleSubmitFinancialInfo();
+        await onSubmitFinancialInfo();
         setIsLoading(false);
     }
 
@@ -38,8 +38,8 @@ const BudgetForm = ({
             error={error}
         >
             <ProgressBar step={3} />
-            <Input label="Budget" id="budget" type="number" step="0.01" min="0"
-                placeholder="Enter your current budget" value={budget} onChange={(e) => setBudget(Number(e.target.value))}
+            <Input label="Budget" id="budget" type="number" step={0.01} min={0}
+                value={budget} onChange={(e) => setBudget(Number(e.target.value))}
             />
             <Select label="Currency" id="currency" value={currency}
                 onChange={(e) => setCurrency(e.target.value)}

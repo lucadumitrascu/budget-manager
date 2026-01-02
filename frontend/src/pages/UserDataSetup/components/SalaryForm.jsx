@@ -41,11 +41,11 @@ const SalaryForm = ({
             error={error}
         >
             <ProgressBar step={step} />
-            <Input label="Salary" id="salary" type="number" step="0.01" min="0.01"
-                placeholder="Enter your salary" value={salary} onChange={(e) => setSalary(Number(e.target.value))}
+            <Input label="Salary" id="salary" type="number" step={0.01} min={0.01}
+                value={salary} onChange={(e) => setSalary(Number(e.target.value))}
             />
-            <Input label="Salary Day" id="salaryDay" type="number" min="1" max="31"
-                placeholder="Enter day (1-31)" value={salaryDay} onChange={(e) => setSalaryDay(Number(e.target.value))}
+            <Input label="Salary Day (1-31)" id="salary-day" type="number" min={1} max={31}
+                value={salaryDay} onChange={(e) => setSalaryDay(Number(e.target.value))}
             />
         </Form>
     );

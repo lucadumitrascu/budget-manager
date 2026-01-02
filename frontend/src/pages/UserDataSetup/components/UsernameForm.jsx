@@ -41,7 +41,7 @@ const UsernameForm = ({
             <ProgressBar step={step} />
             <Input
                 label="Username" id="username" autoComplete="username" type="text"
-                maxLength="50" placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                maxLength={50} placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </Form>
     );
 }
