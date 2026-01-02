@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useError from "../../../hooks/useError";
 import { addExpense } from "../../../services/expenseService";
-import { addExpenseAction } from "../../../redux/slices/expenseSlice";
+import { addExpenseAction } from "../../../redux/slices/expensesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showSuccessToast } from "../../../utils/toast";
 import Form from "../../../components/Form";
@@ -15,7 +15,7 @@ const ExpenseForm = ({
     categories,
     toggleView,
     toggleViewButtonText,
-    addCategory,
+    onAddCategory,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -71,13 +71,13 @@ const ExpenseForm = ({
             isAuthForm={false}
             onSubmit={handleAddExpense}
             primaryButton={{ text: "Submit", isLoading: false }}
-            tertiaryButton={{ text: "Add Category", onClick: toggleViewButtonText === "Manage Expenses" ? addCategory : null }}
+            tertiaryButton={{ text: "Add Category", onClick: toggleViewButtonText === "Manage Expenses" ? onAddCategory : null }}
             secondaryButton={{ text: toggleViewButtonText, onClick: toggleView }}
             error={error}
             containsGoogleLoginButton={false}
         >
             <Input
-                label="Amount" id="amount" type="number" step="0.01" min="0.01"
+                label="Amount" id="amount" type="number" step={0.01} min={0.01}
                 value={amount} onChange={(e) => setAmount(Number(e.target.value))}
             />
 
@@ -89,7 +89,7 @@ const ExpenseForm = ({
             <Input
                 label="Description" id="description" type="text" maxLength={100}
                 value={description} onChange={(e) => setDescription(e.target.value)}
-                required={false}
+                required={false} placeholder="Optional note about this transaction..."
             />
         </Form>
     );

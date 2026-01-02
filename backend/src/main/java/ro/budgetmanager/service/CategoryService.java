@@ -60,8 +60,7 @@ public class CategoryService {
     public ResponseEntity<ApiResponseDto<String>> updateCategory(Integer id, CategoryDto categoryDto) {
         User user = authService.getAuthenticatedUser();
 
-        Optional<Category> categoryOptional = categoryRepository
-                .findByIdAndFinancialInfo(id, user.getFinancialInfo());
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.isEmpty()) {
             return buildResponse("Category not found.", null, HttpStatus.NOT_FOUND);
         }
@@ -79,8 +78,7 @@ public class CategoryService {
     public ResponseEntity<ApiResponseDto<String>> deleteCategory(Integer id) {
         User user = authService.getAuthenticatedUser();
 
-        Optional<Category> categoryOptional = categoryRepository
-                .findByIdAndFinancialInfo(id, user.getFinancialInfo());
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.isEmpty()) {
             return buildResponse("Category not found.", null, HttpStatus.NOT_FOUND);
         }

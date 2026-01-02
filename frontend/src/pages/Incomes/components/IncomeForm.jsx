@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useError from "../../../hooks/useError";
 import { addIncome } from "../../../services/incomeService";
-import { addIncomeAction } from "../../../redux/slices/incomeSlice";
+import { addIncomeAction } from "../../../redux/slices/incomesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showSuccessToast } from "../../../utils/toast";
 import { isWithinNumericLimits } from "../../../utils/validation";
@@ -16,7 +16,7 @@ const IncomeForm = ({
     incomeSources,
     toggleView,
     toggleViewButtonText,
-    addIncomeSource,
+    onAddIncomeSource,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -69,18 +69,18 @@ const IncomeForm = ({
             isAuthForm={false}
             onSubmit={handleAddIncome}
             primaryButton={{ text: "Submit", isLoading: false }}
-            tertiaryButton={{ text: "Add Income Source", onClick: toggleViewButtonText === "Manage Incomes" ? addIncomeSource : null }}
+            tertiaryButton={{ text: "Add Income Source", onClick: toggleViewButtonText === "Manage Incomes" ? onAddIncomeSource : null }}
             secondaryButton={{ text: toggleViewButtonText, onClick: toggleView }}
             error={error}
             containsGoogleLoginButton={false}
         >
             <Input
-                label="Amount" id="amount" type="number" step="0.01" min="0.01"
+                label="Amount" id="amount" type="number" step={0.01} min={0.01}
                 value={amount} onChange={(e) => setAmount(Number(e.target.value))}
             />
 
             <Select
-                label="Income Source" id="incomeSource" options={incomeSourceOptions}
+                label="Income Source" id="income-source" options={incomeSourceOptions}
                 value={incomeSource} onChange={(e) => setIncomeSource(e.target.value)}
             />
         </Form>

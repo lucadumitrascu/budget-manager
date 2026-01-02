@@ -58,8 +58,7 @@ public class IncomeSourceService {
     public ResponseEntity<ApiResponseDto<String>> updateIncomeSource(Integer id, IncomeSourceDto incomeSourceDto) {
         User user = authService.getAuthenticatedUser();
 
-        Optional<IncomeSource> incomeSourceOptional = incomeSourceRepository
-                .findByIdAndFinancialInfo(id, user.getFinancialInfo());
+        Optional<IncomeSource> incomeSourceOptional = incomeSourceRepository.findById(id);
         if (incomeSourceOptional.isEmpty()) {
             return buildResponse("Income source not found.", null, HttpStatus.NOT_FOUND);
         }
@@ -77,8 +76,7 @@ public class IncomeSourceService {
     public ResponseEntity<ApiResponseDto<String>> deleteIncomeSource(Integer id) {
         User user = authService.getAuthenticatedUser();
 
-        Optional<IncomeSource> incomeSourceOptional = incomeSourceRepository
-                .findByIdAndFinancialInfo(id, user.getFinancialInfo());
+        Optional<IncomeSource> incomeSourceOptional = incomeSourceRepository.findById(id);
         if (incomeSourceOptional.isEmpty()) {
             return buildResponse("Income source not found.", null, HttpStatus.NOT_FOUND);
         }

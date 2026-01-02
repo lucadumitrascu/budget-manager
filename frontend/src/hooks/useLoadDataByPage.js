@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setExpensesAction } from "../redux/slices/expenseSlice";
-import { setCategoriesAction } from "../redux/slices/categorySlice";
+import { setExpensesAction } from "../redux/slices/expensesSlice";
+import { setCategoriesAction } from "../redux/slices/categoriesSlice";
 import { getExpenses } from "../services/expenseService";
 import { getCategories } from "../services/categoryService";
 import { getIncomes } from "../services/incomeService";
 import { getIncomeSources } from "../services/incomeSourceService";
-import { setIncomesAction } from "../redux/slices/incomeSlice";
-import { setIncomeSourcesAction } from "../redux/slices/incomeSourceSlice";
+import { setIncomesAction } from "../redux/slices/incomesSlice";
+import { setIncomeSourcesAction } from "../redux/slices/incomeSourcesSlice";
 
 const useLoadDataByPage = (page = "") => {
     const dispatch = useDispatch();

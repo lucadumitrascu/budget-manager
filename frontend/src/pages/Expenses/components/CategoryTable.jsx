@@ -1,18 +1,18 @@
 import { useDispatch } from "react-redux";
 import { deleteCategory } from "../../../services/categoryService";
-import { deleteCategoryAction } from "../../../redux/slices/categorySlice";
-import { deleteExpensesByCategoryAction } from "../../../redux/slices/expenseSlice";
+import { deleteCategoryAction } from "../../../redux/slices/categoriesSlice";
+import { deleteExpensesByCategoryAction } from "../../../redux/slices/expensesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showAreYouSureSwal, showErrorSwal } from "../../../utils/swal";
+import { showSuccessToast } from "../../../utils/toast";
 import { isWithinNumericLimits } from "../../../utils/validation";
 import Table from "../../../components/Table";
-import { showSuccessToast } from "../../../utils/toast";
 
 const CategoryTable = ({
     categories,
     expenses,
     budget,
-    handleEditCategory,
+    onEditCategory,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const CategoryTable = ({
         const updatedBudget = budget + totalDeletedAmount;
 
         if (!isWithinNumericLimits(updatedBudget)) {
-            showErrorSwal("Deleting this category will lead the budget to exceed the maximum allowed limit.");
+            showErrorSwal("Deleting this category would exceed the maximum budget limit.");
             return;
         }
 
@@ -49,7 +49,7 @@ const CategoryTable = ({
         <Table
             data={categories}
             columns={columns}
-            onEdit={handleEditCategory}
+            onEdit={onEditCategory}
             onDelete={handleDeleteCategory}
             expandableKeys={["name"]}
             noDataText="No categories added yet."

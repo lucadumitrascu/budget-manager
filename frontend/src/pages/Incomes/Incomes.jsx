@@ -30,7 +30,7 @@ function Incomes() {
                 incomeSources={incomeSources}
                 toggleView={toggleView}
                 toggleViewButtonText={isManagingIncomes ? "Manage Sources" : "Manage Incomes"}
-                addIncomeSource={() => incomeSourceModalController.open(null)}
+                onAddIncomeSource={() => incomeSourceModalController.open(null)}
                 token={token}
             />
 
@@ -38,14 +38,14 @@ function Incomes() {
                 <IncomeTable
                     incomes={incomes}
                     budget={financialInfo.budget}
-                    handleEditIncome={incomeModalController.open}
+                    onEditIncome={incomeModalController.open}
                     token={token} />
             ) : (
                 <IncomeSourceTable
                     incomeSources={incomeSources}
                     incomes={incomes}
                     budget={financialInfo.budget}
-                    handleEditIncomeSource={incomeSourceModalController.open}
+                    onEditIncomeSource={incomeSourceModalController.open}
                     token={token}
                 />
             )}

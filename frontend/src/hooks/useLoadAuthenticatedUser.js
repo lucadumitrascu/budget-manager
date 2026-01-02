@@ -34,6 +34,7 @@ const useLoadAuthenticatedUser = () => {
                 }));
             } else {
                 goToLogin();
+                localStorage.clear();
             }
         };
 

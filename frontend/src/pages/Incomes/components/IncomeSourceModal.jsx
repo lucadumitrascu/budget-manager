@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useError from "../../../hooks/useError";
 import { addIncomeSource, updateIncomeSource } from "../../../services/incomeSourceService";
-import { addIncomeSourceAction, updateIncomeSourceAction } from "../../../redux/slices/incomeSourceSlice";
-import { updateIncomeSourceInIncomesAction } from "../../../redux/slices/incomeSlice";
+import { addIncomeSourceAction, updateIncomeSourceAction } from "../../../redux/slices/incomeSourcesSlice";
+import { updateIncomeSourceInIncomesAction } from "../../../redux/slices/incomesSlice";
 import { showInfoToast, showSuccessToast } from "../../../utils/toast";
 import { validateUniqueTextField } from "../../../utils/validation";
 import ModalForm from "../../../components/ModalForm";
@@ -20,7 +20,6 @@ const IncomeSourceModal = ({
 }) => {
     const dispatch = useDispatch();
     const [incomeSourceName, setIncomeSourceName] = useState("");
-    const oldIncomeSourceName = incomeSource?.name;
     const [error, setError] = useError();
 
     useEffect(() => {
@@ -31,11 +30,6 @@ const IncomeSourceModal = ({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!hasChanges) {
-            showInfoToast("Income source is already up-to-date");
-            onClose();
-            return;
-        }
 
         const errorMessage = validateUniqueTextField(incomeSourceName, incomeSources, "income source");
         if (errorMessage) {
@@ -47,14 +41,21 @@ const IncomeSourceModal = ({
         if (incomeSource?.id) {
             const updatedIncomeSource = {
                 id: incomeSource.id,
-                createdAt: incomeSource.createdAt,
-                name: incomeSourceName.trim()
+                name: incomeSourceName.trim(),
+                createdAt: incomeSource.createdAt
             };
+
+            if (!hasChanges) {
+                showInfoToast("Income source is already up-to-date");
+                onClose();
+                return;
+            }
+
             result = await updateIncomeSource(updatedIncomeSource, token);
             if (result.success) {
                 dispatch(updateIncomeSourceAction(updatedIncomeSource));
                 dispatch(updateIncomeSourceInIncomesAction({
-                    oldIncomeSource: oldIncomeSourceName,
+                    oldIncomeSource: incomeSource.name,
                     newIncomeSource: updatedIncomeSource.name
                 }));
             }
@@ -64,7 +65,6 @@ const IncomeSourceModal = ({
                 dispatch(addIncomeSourceAction(result.data));
             }
         }
-
         if (result.success) {
             showSuccessToast(result.message);
             setIncomeSourceName("");
@@ -85,7 +85,7 @@ const IncomeSourceModal = ({
             error={error}
         >
             <Input
-                label="Income Source" id="incomeSource" type="text" placeholder="Income Source Name..."
+                label="Income Source" id="income-source" type="text" placeholder="Income Source Name..."
                 value={incomeSourceName} onChange={(e) => setIncomeSourceName(e.target.value)}
                 maxLength={50}
             />

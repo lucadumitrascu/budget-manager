@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useError from "../../../hooks/useError";
 import { addCategory, updateCategory } from "../../../services/categoryService";
-import { addCategoryAction, updateCategoryAction } from "../../../redux/slices/categorySlice";
-import { updateCategoryInExpensesAction } from "../../../redux/slices/expenseSlice";
+import { addCategoryAction, updateCategoryAction } from "../../../redux/slices/categoriesSlice";
+import { updateCategoryInExpensesAction } from "../../../redux/slices/expensesSlice";
 import { showInfoToast, showSuccessToast } from "../../../utils/toast";
 import { validateUniqueTextField } from "../../../utils/validation";
 import ModalForm from "../../../components/ModalForm";
@@ -20,7 +20,6 @@ const CategoryModal = ({
 }) => {
     const dispatch = useDispatch();
     const [categoryName, setCategoryName] = useState("");
-    const oldCategoryName = category?.name;
     const [error, setError] = useError();
 
     useEffect(() => {
@@ -32,12 +31,6 @@ const CategoryModal = ({
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!hasChanges) {
-            showInfoToast("Category is already up-to-date");
-            onClose();
-            return;
-        }
-
         const errorMessage = validateUniqueTextField(categoryName, categories, "category");
         if (errorMessage) {
             setError(errorMessage);
@@ -48,14 +41,21 @@ const CategoryModal = ({
         if (category?.id) {
             const updatedCategory = {
                 id: category.id,
-                createdAt: category.createdAt,
-                name: categoryName.trim()
+                name: categoryName.trim(),
+                createdAt: category.createdAt
             };
+
+            if (!hasChanges) {
+                showInfoToast("Category is already up-to-date");
+                onClose();
+                return;
+            }
+
             result = await updateCategory(updatedCategory, token);
             if (result.success) {
                 dispatch(updateCategoryAction(updatedCategory));
                 dispatch(updateCategoryInExpensesAction({
-                    oldCategory: oldCategoryName,
+                    oldCategory: category.name,
                     newCategory: updatedCategory.name
                 }));
             }

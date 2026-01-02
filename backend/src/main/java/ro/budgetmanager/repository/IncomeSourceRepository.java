@@ -10,6 +10,4 @@ import java.util.Optional;
 @Repository
 public interface IncomeSourceRepository extends JpaRepository<IncomeSource, Integer> {
     Optional<IncomeSource> findByNameAndFinancialInfo(String name, FinancialInfo financialInfo);
-
-    Optional<IncomeSource> findByIdAndFinancialInfo(Integer id, FinancialInfo financialInfo);
 }

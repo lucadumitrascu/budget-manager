@@ -30,7 +30,7 @@ function Expenses() {
                 categories={categories}
                 toggleView={toggleView}
                 toggleViewButtonText={isManagingExpenses ? "Manage Categories" : "Manage Expenses"}
-                addCategory={() => categoryModalController.open(null)}
+                onAddCategory={() => categoryModalController.open(null)}
                 token={token}
             />
 
@@ -38,14 +38,15 @@ function Expenses() {
                 <ExpenseTable
                     expenses={expenses}
                     budget={financialInfo.budget}
-                    handleEditExpense={expenseModalController.open}
-                    token={token} />
+                    onEditExpense={expenseModalController.open}
+                    token={token}
+                />
             ) : (
                 <CategoryTable
                     categories={categories}
                     expenses={expenses}
                     budget={financialInfo.budget}
-                    handleEditCategory={categoryModalController.open}
+                    onEditCategory={categoryModalController.open}
                     token={token}
                 />
             )}

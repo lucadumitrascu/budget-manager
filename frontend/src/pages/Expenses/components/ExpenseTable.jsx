@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 import { deleteExpense } from "../../../services/expenseService";
-import { deleteExpenseAction } from "../../../redux/slices/expenseSlice";
+import { deleteExpenseAction } from "../../../redux/slices/expensesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showAreYouSureSwal, showErrorSwal } from "../../../utils/swal";
 import { isWithinNumericLimits } from "../../../utils/validation";
-import Table from "../../../components/Table";
 import { showSuccessToast } from "../../../utils/toast";
+import Table from "../../../components/Table";
 
 const ExpenseTable = ({
     expenses,
     budget,
-    handleEditExpense,
+    onEditExpense,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ExpenseTable = ({
     const handleDeleteExpense = async (expense) => {
         const updatedBudget = budget + expense.amount;
         if (!isWithinNumericLimits(updatedBudget)) {
-            showErrorSwal("Deleting this expense will lead the budget to exceed the maximum allowed limit.");
+            showErrorSwal("Deleting this expense would exceed the maximum budget limit.");
             return;
         }
 
@@ -45,7 +45,7 @@ const ExpenseTable = ({
         <Table
             data={expenses}
             columns={columns}
-            onEdit={handleEditExpense}
+            onEdit={onEditExpense}
             onDelete={handleDeleteExpense}
             expandableKeys={["category", "description"]}
             noDataText="No expenses added yet."

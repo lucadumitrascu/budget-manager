@@ -43,7 +43,7 @@ public class IncomeService {
         User user = authService.getAuthenticatedUser();
 
         List<Income> incomes = incomeRepository
-                .findIncomesByFinancialInfoId(user.getFinancialInfo().getId());
+                .findByIncomeSource_FinancialInfo_Id(user.getFinancialInfo().getId());
 
         return buildResponse("Incomes have been successfully retrieved.",
                 incomeMapper.toIncomeDtos(incomes), HttpStatus.OK);

@@ -43,7 +43,7 @@ public class ExpenseService {
     public ResponseEntity<ApiResponseDto<List<ExpenseDto>>> getExpenses() {
         User user = authService.getAuthenticatedUser();
         List<Expense> expenses = expenseRepository
-                .findExpensesByFinancialInfoId(user.getFinancialInfo().getId());
+                .findByCategory_FinancialInfo_Id(user.getFinancialInfo().getId());
 
         return buildResponse("Expenses have been successfully retrieved.",
                 expenseMapper.toExpenseDtos(expenses), HttpStatus.OK);

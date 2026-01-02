@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useError from "../../../hooks/useError";
 import { updateIncome } from "../../../services/incomeService";
-import { updateIncomeAction } from "../../../redux/slices/incomeSlice";
+import { updateIncomeAction } from "../../../redux/slices/incomesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showInfoToast, showSuccessToast } from "../../../utils/toast";
 import { hasChanges, isWithinNumericLimits, validateNumericField } from "../../../utils/validation";
@@ -35,7 +35,7 @@ const EditIncomeModal = ({
 
         const updatedIncome = {
             id: income.id,
-            amount: amount,
+            amount,
             incomeSource,
             createdAt: income.createdAt,
         };
@@ -53,7 +53,6 @@ const EditIncomeModal = ({
         }
 
         const updatedBudget = budget - income.amount + amount;
-
         if (!isWithinNumericLimits(updatedBudget)) {
             setError("Amount exceeds the allowed budget limit.");
             return;
@@ -81,11 +80,11 @@ const EditIncomeModal = ({
             error={error}
         >
             <Input
-                label="Amount" id="amount" type="number" step="0.01" min="0.01"
+                label="Amount" id="amount" type="number" step={0.01} min={0.01}
                 value={amount} onChange={(e) => setAmount(Number(e.target.value))}
             />
             <Select
-                label="Income Source" id="incomeSource"
+                label="Income Source" id="income-source"
                 options={incomeSources.map(i => ({ value: i.name, label: i.name }))}
                 value={incomeSource} onChange={(e) => setIncomeSource(e.target.value)}
             />

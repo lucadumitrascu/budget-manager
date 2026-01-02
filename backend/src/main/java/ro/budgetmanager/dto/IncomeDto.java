@@ -16,7 +16,7 @@ public class IncomeDto {
 
     @NotNull(message = "Amount is required.")
     @DecimalMin(value = "0.01", message = "Amount must be greater than 0.")
-    @Digits(integer = 13, fraction = 2, message = "The amount must be a valid number with up to 13 digits and 2 decimal places.")
+    @Digits(integer = 13, fraction = 2, message = "Amount must be a valid number with up to 13 digits and 2 decimal places.")
     private BigDecimal amount;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

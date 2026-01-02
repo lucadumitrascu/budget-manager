@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 import { deleteIncome } from "../../../services/incomeService";
-import { deleteIncomeAction } from "../../../redux/slices/incomeSlice";
+import { deleteIncomeAction } from "../../../redux/slices/incomesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showAreYouSureSwal, showErrorSwal } from "../../../utils/swal";
 import { isWithinNumericLimits } from "../../../utils/validation";
-import Table from "../../../components/Table";
 import { showSuccessToast } from "../../../utils/toast";
+import Table from "../../../components/Table";
 
 const IncomeTable = ({
     incomes,
     budget,
-    handleEditIncome,
+    onEditIncome,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -18,11 +18,11 @@ const IncomeTable = ({
     const handleDeleteIncome = async (income) => {
         const updatedBudget = budget - income.amount;
         if (!isWithinNumericLimits(updatedBudget)) {
-            showErrorSwal("Deleting this income will lead the budget to exceed the minimum allowed limit.");
+            showErrorSwal("Deleting this income would reduce the budget below the minimum limit.");
             return;
         }
 
-        showAreYouSureSwal("Once deleted, this income cannot be restored.", async () => {
+        showAreYouSureSwal("Once deleted, it cannot be restored.", async () => {
             const result = await deleteIncome(income.id, token);
             if (result.success) {
                 dispatch(deleteIncomeAction(income.id));
@@ -44,7 +44,7 @@ const IncomeTable = ({
         <Table
             data={incomes}
             columns={columns}
-            onEdit={handleEditIncome}
+            onEdit={onEditIncome}
             onDelete={handleDeleteIncome}
             expandableKeys={["incomeSource"]}
             noDataText="No incomes added yet."

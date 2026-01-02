@@ -1,18 +1,18 @@
 import { useDispatch } from "react-redux";
 import { deleteIncomeSource } from "../../../services/incomeSourceService";
-import { deleteIncomeSourceAction } from "../../../redux/slices/incomeSourceSlice";
-import { deleteIncomesByIncomeSourceAction } from "../../../redux/slices/incomeSlice";
+import { deleteIncomeSourceAction } from "../../../redux/slices/incomeSourcesSlice";
+import { deleteIncomesByIncomeSourceAction } from "../../../redux/slices/incomesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
 import { showAreYouSureSwal, showErrorSwal } from "../../../utils/swal";
+import { showSuccessToast } from "../../../utils/toast";
 import { isWithinNumericLimits } from "../../../utils/validation";
 import Table from "../../../components/Table";
-import { showSuccessToast } from "../../../utils/toast";
 
 const IncomeSourceTable = ({
     incomeSources,
     incomes,
     budget,
-    handleEditIncomeSource,
+    onEditIncomeSource,
     token,
 }) => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const IncomeSourceTable = ({
         const updatedBudget = budget - totalDeletedAmount;
 
         if (!isWithinNumericLimits(updatedBudget)) {
-            showErrorSwal("Deleting this income source will lead the budget to exceed the minimum allowed limit.");
+            showErrorSwal("Deleting this income source would reduce the budget below the minimum limit.");
             return;
         }
 
@@ -49,7 +49,7 @@ const IncomeSourceTable = ({
         <Table
             data={incomeSources}
             columns={columns}
-            onEdit={handleEditIncomeSource}
+            onEdit={onEditIncomeSource}
             onDelete={handleDeleteIncomeSource}
             expandableKeys={["name"]}
             noDataText="No income sources added yet."
