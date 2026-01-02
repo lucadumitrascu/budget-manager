@@ -8,23 +8,25 @@ import UserDataSetup from "./pages/UserDataSetup/UserDataSetup";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Expenses from "./pages/Expenses/Expenses";
 import Incomes from "./pages/Incomes/Incomes";
+import Savings from "./pages/Savings/Savings";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/authentication/login" element={<Login />} />
-        <Route path="/authentication/register" element={<Register />} />
-        <Route path="/authentication/user-data-setup" element={<UserDataSetup />} />
-        <Route path="/authentication/forgot-password" element={<ForgotPassword />} />
-        <Route path="/authentication/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/incomes" element={<Incomes />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/authentication/login" element={<Login />} />
+                <Route path="/authentication/register" element={<Register />} />
+                <Route path="/authentication/user-data-setup" element={<UserDataSetup />} />
+                <Route path="/authentication/forgot-password" element={<ForgotPassword />} />
+                <Route path="/authentication/reset-password" element={<ResetPassword />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/expenses" element={<Expenses />} />
+                <Route path="/incomes" element={<Incomes />} />
+                <Route path="/savings" element={<Savings />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

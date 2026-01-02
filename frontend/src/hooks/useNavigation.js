@@ -11,6 +11,7 @@ const useNavigation = () => {
         goToDashboard: () => navigate("/dashboard"),
         goToExpenses: () => navigate("/expenses"),
         goToIncomes: () => navigate("/incomes"),
+        goToSavings: () => navigate("/savings"),
     };
 };
 

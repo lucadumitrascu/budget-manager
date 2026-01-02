@@ -8,6 +8,10 @@ import { getIncomes } from "../services/incomeService";
 import { getIncomeSources } from "../services/incomeSourceService";
 import { setIncomesAction } from "../redux/slices/incomesSlice";
 import { setIncomeSourcesAction } from "../redux/slices/incomeSourcesSlice";
+import { getSavings } from "../services/savingService";
+import { getGoals } from "../services/goalService";
+import { setSavingsAction } from "../redux/slices/savingsSlice";
+import { setGoalsAction } from "../redux/slices/goalsSlice";
 
 const useLoadDataByPage = (page = "") => {
     const dispatch = useDispatch();
@@ -16,6 +20,8 @@ const useLoadDataByPage = (page = "") => {
     const categories = useSelector((state) => state.categories);
     const incomes = useSelector((state) => state.incomes);
     const incomeSources = useSelector((state) => state.incomeSources);
+    const savings = useSelector((state) => state.savings);
+    const goals = useSelector((state) => state.goals);
 
     const isEmpty = (arr) => !arr || arr.length === 0;
 
@@ -47,12 +53,27 @@ const useLoadDataByPage = (page = "") => {
         }
     };
 
+    const fetchSavingsData = async () => {
+        const [savingsResult, goalsResult] = await Promise.all([
+            getSavings(token),
+            getGoals(token),
+        ]);
+
+        if (savingsResult.success) {
+            dispatch(setSavingsAction(savingsResult.data));
+        }
+        if (goalsResult.success) {
+            dispatch(setGoalsAction(goalsResult.data));
+        }
+    };
+
     useEffect(() => {
         if (!token) return;
 
         const shouldFetchByPage = {
             expenses: isEmpty(expenses) || isEmpty(categories),
             incomes: isEmpty(incomes) || isEmpty(incomeSources),
+            savings: isEmpty(savings) || isEmpty(goals),
         };
         if (!shouldFetchByPage[page]) return;
 
@@ -63,6 +84,9 @@ const useLoadDataByPage = (page = "") => {
                     break;
                 case "incomes":
                     await fetchIncomesData();
+                    break;
+                case "savings":
+                    await fetchSavingsData();
                     break;
                 default:
                     break;

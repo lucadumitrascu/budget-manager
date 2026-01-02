@@ -1,0 +1,42 @@
+.savings-summary {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    min-width: 95%;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2b6cb0;
+    background-color: rgba(16, 22, 29, 0.15);
+    padding: 0 10px;
+    border-radius: 8px;
+}
+
+.savings-summary strong {
+    color: #347750;
+}
+
+.savings-summary button {
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 8rem;
+    background-color: #2b6cb0;
+}
+
+.savings-summary .btn-add-goal {
+    background-color: #48bb78;
+}
+
+.savings-summary button:hover {
+    opacity: 0.8;
+}
+
+.savings-summary .div-buttons {
+    display: flex;
+    gap: 1rem;
+}

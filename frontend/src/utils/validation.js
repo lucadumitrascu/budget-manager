@@ -34,7 +34,7 @@ export const validateUniqueTextField = (value, existingItems, label) => {
     if (!trimmedValue) return `${label} name cannot be empty.`;
 
     const alreadyExists = existingItems.some((item) => item.name === trimmedValue);
-    if (alreadyExists) return `A ${label} with this name already exists.`;
+    if (alreadyExists) return `${label} with this name already exists.`;
     return null;
 };
 

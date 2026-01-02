@@ -31,7 +31,13 @@ const CategoryModal = ({
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const errorMessage = validateUniqueTextField(categoryName, categories, "category");
+        if (!hasChanges) {
+            showInfoToast("Category is already up-to-date");
+            onClose();
+            return;
+        }
+
+        const errorMessage = validateUniqueTextField(categoryName, categories, "Category");
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -44,12 +50,6 @@ const CategoryModal = ({
                 name: categoryName.trim(),
                 createdAt: category.createdAt
             };
-
-            if (!hasChanges) {
-                showInfoToast("Category is already up-to-date");
-                onClose();
-                return;
-            }
 
             result = await updateCategory(updatedCategory, token);
             if (result.success) {

@@ -31,7 +31,13 @@ const IncomeSourceModal = ({
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const errorMessage = validateUniqueTextField(incomeSourceName, incomeSources, "income source");
+        if (!hasChanges) {
+            showInfoToast("Income source is already up-to-date");
+            onClose();
+            return;
+        }
+
+        const errorMessage = validateUniqueTextField(incomeSourceName, incomeSources, "Income source");
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -44,12 +50,6 @@ const IncomeSourceModal = ({
                 name: incomeSourceName.trim(),
                 createdAt: incomeSource.createdAt
             };
-
-            if (!hasChanges) {
-                showInfoToast("Income source is already up-to-date");
-                onClose();
-                return;
-            }
 
             result = await updateIncomeSource(updatedIncomeSource, token);
             if (result.success) {
