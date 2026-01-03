@@ -22,6 +22,7 @@ public class CategoryMapper {
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setCreatedAt(category.getCreatedAt());
+        categoryDto.setMonthlyLimit(category.getMonthlyLimit());
         return categoryDto;
     }
 

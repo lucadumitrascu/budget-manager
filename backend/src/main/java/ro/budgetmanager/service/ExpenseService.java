@@ -8,12 +8,15 @@ import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.ExpenseDto;
 import ro.budgetmanager.entity.Category;
 import ro.budgetmanager.entity.Expense;
+import ro.budgetmanager.entity.FinancialInfo;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.mapper.ExpenseMapper;
 import ro.budgetmanager.repository.CategoryRepository;
 import ro.budgetmanager.repository.ExpenseRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,7 +72,12 @@ public class ExpenseService {
         financialInfoService.adjustUserBudget(user, expenseDto.getAmount().negate());
 
         expenseDto = expenseMapper.toExpenseDto(expense);
-        return buildResponse("Expense has been successfully added.", expenseDto, HttpStatus.CREATED);
+
+        String message = verifyCategoryLimit(category, user.getFinancialInfo());
+        if (message.isEmpty()) {
+            message = "Expense has been successfully added.";
+        }
+        return buildResponse(message, expenseDto, HttpStatus.CREATED);
     }
 
     @Transactional
@@ -97,7 +105,11 @@ public class ExpenseService {
 
         applyExpenseChanges(expense, expenseDto, user, category, difference);
 
-        return buildResponse("Expense has been successfully updated.", null, HttpStatus.OK);
+        String message = verifyCategoryLimit(category, user.getFinancialInfo());
+        if (message.isEmpty()) {
+            message = "Expense has been successfully updated.";
+        }
+        return buildResponse(message, null, HttpStatus.OK);
     }
 
     @Transactional
@@ -123,5 +135,24 @@ public class ExpenseService {
         expense.setCategory(category);
         expense.setDescription(expenseDto.getDescription());
         expenseRepository.save(expense);
+    }
+
+    private String verifyCategoryLimit(Category category, FinancialInfo financialInfo) {
+        BigDecimal monthlyLimit = category.getMonthlyLimit();
+        if (monthlyLimit == null || monthlyLimit.compareTo(BigDecimal.ZERO) <= 0) return "";
+
+        LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59);
+        BigDecimal totalSpent = expenseRepository.sumByCategoryForMonth(category.getId(), financialInfo, startOfMonth, endOfMonth);
+
+        if (totalSpent == null || totalSpent.compareTo(monthlyLimit) <= 0) return "";
+
+        String categoryName = category.getName();
+        if (categoryName.length() > 20) categoryName = categoryName.substring(0, 20) + "…";
+
+        return String.format(
+                "Monthly limit of %.2f RON for category %s has been exceeded (Current total: %.2f RON).",
+                monthlyLimit, categoryName, totalSpent
+        );
     }
 }

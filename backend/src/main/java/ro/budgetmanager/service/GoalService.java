@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.GoalDto;
 import ro.budgetmanager.entity.Goal;
+import ro.budgetmanager.entity.Planner;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.mapper.GoalMapper;
 import ro.budgetmanager.repository.GoalRepository;
+import ro.budgetmanager.repository.PlannerRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,15 +24,18 @@ public class GoalService {
 
     private final GoalRepository goalRepository;
     private final GoalMapper goalMapper;
+    private final PlannerRepository plannerRepository;
     private final FinancialInfoService financialInfoService;
     private final AuthService authService;
 
     public GoalService(GoalRepository goalRepository,
                        GoalMapper goalMapper,
+                       PlannerRepository plannerRepository,
                        FinancialInfoService financialInfoService,
                        AuthService authService) {
         this.goalRepository = goalRepository;
         this.goalMapper = goalMapper;
+        this.plannerRepository = plannerRepository;
         this.financialInfoService = financialInfoService;
         this.authService = authService;
     }
@@ -84,7 +89,13 @@ public class GoalService {
 
         Goal goal = goalOptional.get();
         financialInfoService.adjustUserBudget(user, goal.getCurrentAmount());
-        goalRepository.delete(goal);
+        Planner planner = user.getFinancialInfo().getPlanner();
+        if (planner.getSelectedGoal() != null &&
+                planner.getSelectedGoal().getId().equals(goal.getId())) {
+            planner.setSelectedGoal(null);
+            plannerRepository.save(planner);
+        }
+        goalRepository.deleteById(id);
         return buildResponse("Goal has been successfully deleted.", null, HttpStatus.OK);
     }
 

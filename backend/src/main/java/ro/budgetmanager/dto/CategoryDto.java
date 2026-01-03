@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class CategoryDto {
@@ -17,10 +18,13 @@ public class CategoryDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    public CategoryDto(Integer id, String name, LocalDateTime createdAt) {
+    private BigDecimal monthlyLimit;
+
+    public CategoryDto(Integer id, String name, LocalDateTime createdAt, BigDecimal monthlyLimit) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
+        this.monthlyLimit = monthlyLimit;
     }
 
     public CategoryDto() {
@@ -48,5 +52,13 @@ public class CategoryDto {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal getMonthlyLimit() {
+        return monthlyLimit;
+    }
+
+    public void setMonthlyLimit(BigDecimal monthlyLimit) {
+        this.monthlyLimit = monthlyLimit;
     }
 }

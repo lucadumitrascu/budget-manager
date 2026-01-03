@@ -34,12 +34,16 @@ public class FinancialInfo {
     @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals;
 
+    @OneToOne(mappedBy = "financialInfo", cascade = CascadeType.ALL)
+    private Planner planner;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public FinancialInfo(BigDecimal budget, String currency, BigDecimal salary, Integer salaryDay,
-                         List<Category> categories, List<IncomeSource> incomeSources, List<Goal> goals, User user) {
+                         List<Category> categories, List<IncomeSource> incomeSources, List<Goal> goals,
+                         Planner planner, User user) {
         this.budget = budget;
         this.currency = currency;
         this.salary = salary;
@@ -47,6 +51,7 @@ public class FinancialInfo {
         this.categories = categories;
         this.incomeSources = incomeSources;
         this.goals = goals;
+        this.planner = planner;
         this.user = user;
     }
 
@@ -116,6 +121,14 @@ public class FinancialInfo {
 
     public void setGoals(List<Goal> goals) {
         this.goals = goals;
+    }
+
+    public Planner getPlanner() {
+        return planner;
+    }
+
+    public void setPlanner(Planner planner) {
+        this.planner = planner;
     }
 
     public User getUser() {

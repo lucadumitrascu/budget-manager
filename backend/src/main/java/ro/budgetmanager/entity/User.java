@@ -3,6 +3,9 @@ package ro.budgetmanager.entity;
 import jakarta.persistence.*;
 import ro.budgetmanager.enums.AuthProvider;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -20,6 +23,9 @@ public class User {
     @Column
     private String password;
 
+    @Column(nullable = false)
+    private LocalDateTime lastAccessTime;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AuthProvider authProvider;
@@ -27,11 +33,20 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private FinancialInfo financialInfo;
 
-    public User(String username, String email, String password,
+    @PrePersist
+    public void prePersist() {
+        if (this.lastAccessTime == null) {
+            this.lastAccessTime = LocalDateTime.now();
+        }
+    }
+
+    public User(Integer id, String username, String email, String password, LocalDateTime lastAccessTime,
                 AuthProvider authProvider, FinancialInfo financialInfo) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.lastAccessTime = lastAccessTime;
         this.authProvider = authProvider;
         this.financialInfo = financialInfo;
     }
@@ -70,6 +85,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDateTime getLastAccessTime() {
+        return lastAccessTime;
+    }
+
+    public void setLastAccessTime(LocalDateTime lastAccessTime) {
+        this.lastAccessTime = lastAccessTime;
     }
 
     public AuthProvider getAuthProvider() {

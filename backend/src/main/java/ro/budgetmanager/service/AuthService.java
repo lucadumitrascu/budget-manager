@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserCredentialsDto;
 import ro.budgetmanager.entity.FinancialInfo;
+import ro.budgetmanager.entity.Planner;
 import ro.budgetmanager.entity.User;
 import ro.budgetmanager.enums.AuthProvider;
 import ro.budgetmanager.repository.UserRepository;
@@ -161,6 +162,12 @@ public class AuthService {
         financialInfo.setSalary(BigDecimal.ZERO);
         financialInfo.setSalaryDay(0);
         financialInfo.setUser(newUser);
+
+        Planner planner = new Planner();
+        planner.setFinancialInfo(financialInfo);
+        planner.setMonthlyBudget(BigDecimal.ZERO);
+        planner.setSelectedGoal(null);
+        financialInfo.setPlanner(planner);
 
         newUser.setFinancialInfo(financialInfo);
         userRepository.save(newUser);

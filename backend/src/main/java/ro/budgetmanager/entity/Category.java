@@ -2,6 +2,7 @@ package ro.budgetmanager.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +23,9 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expense> expenses;
 
+    @Column(nullable = false)
+    private BigDecimal monthlyLimit;
+
     @ManyToOne
     @JoinColumn(name = "financial_info_id", nullable = false)
     private FinancialInfo financialInfo;
@@ -31,13 +35,18 @@ public class Category {
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
         }
+        if (this.monthlyLimit == null) {
+            this.monthlyLimit = BigDecimal.ZERO;
+        }
     }
 
-    public Category(Integer id, String name, LocalDateTime createdAt, List<Expense> expenses, FinancialInfo financialInfo) {
+    public Category(Integer id, String name, LocalDateTime createdAt, List<Expense> expenses,
+                    BigDecimal monthlyLimit, FinancialInfo financialInfo) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
         this.expenses = expenses;
+        this.monthlyLimit = monthlyLimit;
         this.financialInfo = financialInfo;
     }
 
@@ -74,6 +83,14 @@ public class Category {
 
     public void setExpenses(List<Expense> expenses) {
         this.expenses = expenses;
+    }
+
+    public BigDecimal getMonthlyLimit() {
+        return monthlyLimit;
+    }
+
+    public void setMonthlyLimit(BigDecimal monthlyLimit) {
+        this.monthlyLimit = monthlyLimit;
     }
 
     public FinancialInfo getFinancialInfo() {
