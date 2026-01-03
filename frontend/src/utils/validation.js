@@ -41,3 +41,18 @@ export const validateUniqueTextField = (value, existingItems, label) => {
 export const hasChanges = (a, b) => {
     return Object.keys(a).some(key => `${a[key]}` !== `${b[key]}`);
 };
+
+export const hasChangesLists = (listA, listB) => {
+    if (listA.length !== listB.length) {
+        return true;
+    }
+
+    for (const itemA of listA) {
+        const matchingItem = listB.find(itemB => itemB.id === itemA.id);
+        if (!matchingItem || hasChanges(itemA, matchingItem)) {
+            return true;
+        }
+    }
+
+    return false;
+};

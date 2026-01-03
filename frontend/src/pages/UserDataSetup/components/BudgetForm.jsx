@@ -3,7 +3,7 @@ import { validateNumericField } from "../../../utils/validation";
 import Form from "../../../components/Form";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../../../components/ProgressBar";
 
 const BudgetForm = ({
     budget,

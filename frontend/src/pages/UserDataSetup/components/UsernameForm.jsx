@@ -4,7 +4,7 @@ import { saveUsername } from "../../../services/userService";
 import { showSuccessSwal } from "../../../utils/swal";
 import Form from "../../../components/Form";
 import Input from "../../../components/Input";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../../../components/ProgressBar";
 
 const UsernameForm = ({
     step,

@@ -3,7 +3,7 @@ import useNavigation from "../../../hooks/useNavigation";
 import useLogoutUser from "../../../hooks/useLogoutUser";
 
 const VerticalNavbar = () => {
-    const { goToDashboard, goToExpenses, goToIncomes, goToSavings } = useNavigation();
+    const { goToDashboard, goToExpenses, goToIncomes, goToSavings, goToPlanner } = useNavigation();
     const logoutUser = useLogoutUser();
 
     return (
@@ -21,6 +21,9 @@ const VerticalNavbar = () => {
                 </button>
                 <button onClick={goToSavings}>
                     Savings
+                </button>
+                <button onClick={goToPlanner}>
+                    Planner
                 </button>
             </div>
             <div className={styles["div-buttons"]}>

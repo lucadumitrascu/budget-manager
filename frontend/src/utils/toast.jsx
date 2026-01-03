@@ -9,6 +9,10 @@ export const showInfoToast = (message) => {
     toast["info"](message, { ...config });
 };
 
+export const showWarningToast = (message) => {
+    toast["warning"]("Warning: " + message, { ...config, autoClose: 5000 });
+};
+
 const config = {
     position: "bottom-right",
     autoClose: 2000,

@@ -22,6 +22,19 @@ const categoriesSlice = createSlice({
                 category => category.id !== action.payload
             );
         },
+        updateCategoriesLimitsAction: (state, action) => {
+            const updatedCategories = action.payload;
+
+            return state.map(category => {
+                const updatedCategory = updatedCategories.find(
+                    c => c.id === category.id
+                );
+
+                return updatedCategory
+                    ? { ...category, monthlyLimit: updatedCategory.monthlyLimit }
+                    : category;
+            });
+        },
     },
 });
 
@@ -30,6 +43,7 @@ export const {
     addCategoryAction,
     updateCategoryAction,
     deleteCategoryAction,
+    updateCategoriesLimitsAction
 } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

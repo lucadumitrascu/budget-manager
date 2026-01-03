@@ -7,6 +7,8 @@ import incomesReducer from "./slices/incomesSlice";
 import incomeSourcesReducer from "./slices/incomeSourcesSlice";
 import savingsReducer from "./slices/savingsSlice";
 import goalsReducer from "./slices/goalsSlice";
+import plannerReducer from "./slices/plannerSlice";
+import fixedTransactionsReducer from "./slices/fixedTransactionsSlice";
 import { logoutUserAction } from "./rootActions";
 
 const appReducer = combineReducers({
@@ -18,6 +20,8 @@ const appReducer = combineReducers({
     incomes: incomesReducer,
     goals: goalsReducer,
     savings: savingsReducer,
+    planner: plannerReducer,
+    fixedTransactions: fixedTransactionsReducer,
 });
 
 const rootReducer = (state, action) => {

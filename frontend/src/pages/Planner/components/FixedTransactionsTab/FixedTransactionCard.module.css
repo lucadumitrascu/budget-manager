@@ -1,0 +1,118 @@
+.ft-card,
+.ft-add-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 15rem;
+    min-width: 27rem;
+    max-width: 27rem;
+    padding: 1.5rem;
+    background-color: #2c3e50;
+    color: #edf2f7;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+    animation: fade-in-up 0.2s linear;
+}
+
+@keyframes fade-in-up {
+    from {
+        transform: translateY(0.8rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.ft-add-card {
+    font-size: 1.1rem;
+    justify-content: center;
+    align-items: center;
+    border: 0.1rem dashed #bbb;
+    cursor: pointer;
+}
+
+.ft-add-card:hover {
+    opacity: 0.9;
+}
+
+.ft-add-card .ft-plus-sign {
+    font-size: 3rem;
+    color: #007bff;
+}
+
+.ft-card .ft-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.ft-card h3 {
+    margin: 0.2rem 0;
+    font-size: 1.3rem;
+    word-break: break-word;
+    white-space: normal;
+    height: 2.5rem;
+    line-height: 1.25rem;
+}
+
+.ft-card p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ft-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.ft-card button {
+    font-weight: bold;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ft-btn-edit {
+    background-color: #F39C12;
+}
+
+.ft-btn-delete {
+    background-color: #E74C3C;
+}
+
+.ft-btn-edit:hover,
+.ft-btn-delete:hover,
+.ft-card button:hover {
+    opacity: 0.8;
+}
+
+.ft-card-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 1.5rem;
+    margin-top: 0.5rem;
+    padding: 0.2rem 0;
+    font-weight: 450;
+    font-size: 0.85rem;
+    background-color: #1993da;
+    border-radius: 0.55rem;
+}
+
+.ft-card-type[data-type="INCOME"] {
+    background-color: #2ECC71;
+}

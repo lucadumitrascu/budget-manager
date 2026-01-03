@@ -4,7 +4,7 @@ import useError from "../../../hooks/useError";
 import { updateExpense } from "../../../services/expenseService";
 import { updateExpenseAction } from "../../../redux/slices/expensesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
-import { showInfoToast, showSuccessToast } from "../../../utils/toast";
+import { showInfoToast, showSuccessToast, showWarningToast } from "../../../utils/toast";
 import { hasChanges, validateNumericField } from "../../../utils/validation";
 import ModalForm from "../../../components/ModalForm";
 import Input from "../../../components/Input";
@@ -61,13 +61,18 @@ const EditExpenseModal = ({
             return;
         }
 
+        const successMessage = "Expense has been successfully updated.";
         const result = await updateExpense(updatedExpense, token);
         if (result.success) {
             dispatch(updateExpenseAction(updatedExpense));
             dispatch(setBudgetAction(updatedBudget));
-            showSuccessToast(result.message);
             setError("");
             onClose();
+            if (result.message !== successMessage) {
+                showWarningToast(result.message);
+            } else {
+                showSuccessToast(result.message);
+            }
         } else {
             setError(result.message);
         }

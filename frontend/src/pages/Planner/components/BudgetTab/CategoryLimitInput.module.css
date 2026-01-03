@@ -1,0 +1,44 @@
+.category-limit-input {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-content: center;
+    min-width: 30rem;
+    margin-bottom: 0;
+    background-color: #ECF0F1;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.category-limit-input label {
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 8rem;
+    color: #2C3E50;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.category-limit-input .input-slider {
+    accent-color: #0284c7;
+    background-color: #bae6fd;
+    cursor: pointer;
+    height: 6px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.category-limit-input .input-number {
+    width: 60%;
+    padding: 0.4rem;
+    border: 1px solid #95a5a6;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    background-color: #ffffff;
+    color: #2C3E50;
+    justify-self: center;
+}

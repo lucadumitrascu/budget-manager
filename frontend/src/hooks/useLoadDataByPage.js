@@ -12,6 +12,10 @@ import { getSavings } from "../services/savingService";
 import { getGoals } from "../services/goalService";
 import { setSavingsAction } from "../redux/slices/savingsSlice";
 import { setGoalsAction } from "../redux/slices/goalsSlice";
+import { getPlanner } from "../services/plannerService";
+import { getFixedTransactions } from "../services/fixedTransactionService";
+import { setFixedTransactionsAction } from "../redux/slices/fixedTransactionsSlice";
+import { setPlannerAction } from "../redux/slices/plannerSlice";
 
 const useLoadDataByPage = (page = "") => {
     const dispatch = useDispatch();
@@ -22,6 +26,7 @@ const useLoadDataByPage = (page = "") => {
     const incomeSources = useSelector((state) => state.incomeSources);
     const savings = useSelector((state) => state.savings);
     const goals = useSelector((state) => state.goals);
+    const fixedTransactions = useSelector((state) => state.fixedTransactions);
 
     const isEmpty = (arr) => !arr || arr.length === 0;
 
@@ -67,6 +72,38 @@ const useLoadDataByPage = (page = "") => {
         }
     };
 
+    const fetchPlannerData = async () => {
+        const fetches = [];
+
+        if (isEmpty(goals)) {
+            fetches.push(getGoals(token).then(result => {
+                if (result.success) dispatch(setGoalsAction(result.data));
+            }));
+        }
+
+        if (isEmpty(categories)) {
+            fetches.push(getCategories(token).then(result => {
+                if (result.success) dispatch(setCategoriesAction(result.data));
+            }));
+        }
+
+        if (isEmpty(incomeSources)) {
+            fetches.push(getIncomeSources(token).then(result => {
+                if (result.success) dispatch(setIncomeSourcesAction(result.data));
+            }));
+        }
+
+        fetches.push(getPlanner(token).then(result => {
+            if (result.success) dispatch(setPlannerAction(result.data));
+        }));
+
+        fetches.push(getFixedTransactions(token).then(result => {
+            if (result.success) dispatch(setFixedTransactionsAction(result.data));
+        }));
+
+        await Promise.all(fetches);
+    };
+
     useEffect(() => {
         if (!token) return;
 
@@ -74,6 +111,7 @@ const useLoadDataByPage = (page = "") => {
             expenses: isEmpty(expenses) || isEmpty(categories),
             incomes: isEmpty(incomes) || isEmpty(incomeSources),
             savings: isEmpty(savings) || isEmpty(goals),
+            planner: isEmpty(fixedTransactions),
         };
         if (!shouldFetchByPage[page]) return;
 
@@ -87,6 +125,9 @@ const useLoadDataByPage = (page = "") => {
                     break;
                 case "savings":
                     await fetchSavingsData();
+                    break;
+                case "planner":
+                    await fetchPlannerData();
                     break;
                 default:
                     break;

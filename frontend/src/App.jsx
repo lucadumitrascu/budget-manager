@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Expenses from "./pages/Expenses/Expenses";
 import Incomes from "./pages/Incomes/Incomes";
 import Savings from "./pages/Savings/Savings";
+import Planner from "./pages/Planner/Planner";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/incomes" element={<Incomes />} />
                 <Route path="/savings" element={<Savings />} />
+                <Route path="/planner" element={<Planner />} />
             </Routes>
         </Router>
     );

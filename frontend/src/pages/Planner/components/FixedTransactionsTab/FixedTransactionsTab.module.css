@@ -1,0 +1,7 @@
+.fixed-transactions-tab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    justify-items: center;
+    width: 100%;
+    gap: 2rem;
+}

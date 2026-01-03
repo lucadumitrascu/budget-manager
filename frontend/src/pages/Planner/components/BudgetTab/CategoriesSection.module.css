@@ -1,0 +1,28 @@
+.categories-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: max(8rem, max-content);
+    max-height: 22rem;
+    overflow-y: auto;
+}
+
+.categories-section h2 {
+    margin: 8rem 0;
+}
+
+.categories-section::-webkit-scrollbar {
+    width: 12px;
+}
+
+.categories-section::-webkit-scrollbar-track {
+    background-color: #ECF0F1;
+}
+
+.categories-section::-webkit-scrollbar-thumb {
+    background-color: #2980B9;
+}
+
+.categories-section::-webkit-scrollbar-thumb:hover {
+    background-color: #255673;
+}

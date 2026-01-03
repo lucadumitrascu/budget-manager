@@ -4,7 +4,7 @@ import useError from "../../../hooks/useError";
 import { addExpense } from "../../../services/expenseService";
 import { addExpenseAction } from "../../../redux/slices/expensesSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
-import { showSuccessToast } from "../../../utils/toast";
+import { showSuccessToast, showWarningToast } from "../../../utils/toast";
 import Form from "../../../components/Form";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
@@ -48,6 +48,7 @@ const ExpenseForm = ({
             description: description.trim() || null,
         };
 
+        const successMessage = "Expense has been successfully added.";
         const result = await addExpense(newExpense, token);
         if (result.success) {
             dispatch(addExpenseAction(result.data));
@@ -55,7 +56,11 @@ const ExpenseForm = ({
             setAmount("");
             setDescription("");
             setError("");
-            showSuccessToast(result.message);
+            if (result.message !== successMessage) {
+                showWarningToast(result.message);
+            } else {
+                showSuccessToast(result.message);
+            }
         } else {
             setError(result.message);
         }

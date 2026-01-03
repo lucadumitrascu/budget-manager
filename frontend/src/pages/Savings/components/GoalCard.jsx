@@ -3,6 +3,7 @@ import { deleteGoalAction } from "../../../redux/slices/goalsSlice";
 import { deleteGoal } from "../../../services/goalService";
 import { deleteSavingsByGoalAction } from "../../../redux/slices/savingsSlice";
 import { setBudgetAction } from "../../../redux/slices/financialInfoSlice";
+import { setSelectedGoalIdAction } from "../../../redux/slices/plannerSlice";
 import { isWithinNumericLimits } from "../../../utils/validation";
 import { withdrawFundsFromGoal } from "../../../services/goalService";
 import { withdrawFundsFromGoalAction } from "../../../redux/slices/goalsSlice";
@@ -66,6 +67,7 @@ const GoalCard = ({
                 dispatch(deleteGoalAction(goal.id));
                 dispatch(deleteSavingsByGoalAction(goal.name));
                 dispatch(setBudgetAction(updatedBudget));
+                dispatch(setSelectedGoalIdAction(null));
                 showSuccessToast(result.message);
             } else {
                 showErrorSwal(result.message);

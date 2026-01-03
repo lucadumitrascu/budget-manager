@@ -1,0 +1,45 @@
+.budget-allocator input {
+    width: 8rem;
+    margin: 0 0.5rem;
+    padding: 0.2rem;
+    background-color: #233e4b;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #8998a8;
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
+}
+
+.budget-allocator {
+    text-align: center;
+    margin: 0;
+}
+
+.budget-allocator p {
+    font-weight: 600;
+}
+
+.allocation-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.budget-allocator button {
+    background-color: #F39C12;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: bold;
+    justify-self: right;
+    cursor: pointer;
+}
+
+.budget-allocator button:hover {
+    opacity: 0.8;
+}

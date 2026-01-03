@@ -2,7 +2,7 @@ import useError from "../../../hooks/useError";
 import { validateNumericField } from "../../../utils/validation";
 import Form from "../../../components/Form";
 import Input from "../../../components/Input";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../../../components/ProgressBar";
 
 const SalaryForm = ({
     salary,
