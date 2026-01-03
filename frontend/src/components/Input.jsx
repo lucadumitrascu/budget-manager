@@ -8,7 +8,7 @@ const Input = ({ label, id, autoComplete = "off", type = "text", maxLength = 255
                 className={styles["input"]}
                 id={id}
                 type={type}
-                value={value}
+                value={type === "number" && !value ? "" : value}
                 onChange={onChange}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
