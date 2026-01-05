@@ -1,0 +1,47 @@
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    width: 90%;
+    min-width: 5rem;
+    height: 10vh;
+    padding: 1rem;
+    background-color: #34495E;
+    color: white;
+    border: 1px solid #dfe6e9;
+    border-radius: 12px;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.25);
+    font-size: 1rem;
+}
+
+.dashboard-card p {
+    margin: 0;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-header h4 {
+    margin: 0;
+    text-align: center;
+}
+
+.amount-positive {
+    color: #2ECC71;
+}
+
+.amount-negative {
+    color: #E74C3C;
+}
+
+.amount-normal {
+    color: #3498DB;
+}

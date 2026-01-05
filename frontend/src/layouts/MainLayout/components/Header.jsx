@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PERIOD_OPTIONS } from "../../../utils/constants";
 import { setExpensesAction } from "../../../redux/slices/expensesSlice";
 import { setIncomesAction } from "../../../redux/slices/incomesSlice";
+import { setUsernameAction } from "../../../redux/slices/userSlice";
 import styles from "./Header.module.css";
 
 const Header = ({ title }) => {
@@ -16,6 +17,7 @@ const Header = ({ title }) => {
         localStorage.setItem("selectedPeriod", value);
         dispatch(setExpensesAction([]));
         dispatch(setIncomesAction([]));
+        dispatch(setUsernameAction(undefined));
     };
 
     return (

@@ -30,12 +30,7 @@ const BudgetAllocator = ({
                     />
                     {currency}
                 </p>
-                <button
-                    type="button"
-                    onClick={handleAllocateAll}
-                    disabled={totalAllocated === localMonthlyBudget}
-                    className={styles["allocate-btn"]}
-                >
+                <button type="button" onClick={handleAllocateAll}>
                     Allocate All
                 </button>
             </div>

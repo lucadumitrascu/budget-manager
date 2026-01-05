@@ -17,16 +17,17 @@ const Planner = () => {
     const fixedTransactions = useSelector((state) => state.fixedTransactions);
 
     const [isBudgetTabActive, setIsBudgetTabActive] = useState(true);
-    const switchTab = () => setIsBudgetTabActive(t => !t);
+    const showBudgetTab = () => setIsBudgetTabActive(true);
+    const showFixedTransactionsTab = () => setIsBudgetTabActive(false);
 
     return (
         <MainLayout title="Planner">
             <div className={styles["planner"]}>
                 <div className={styles["tab-header"]}>
-                    <button onClick={switchTab} className={isBudgetTabActive ? styles["active"] : ""}>
+                    <button onClick={showBudgetTab} className={isBudgetTabActive ? styles["active"] : ""}>
                         Budget
                     </button>
-                    <button onClick={switchTab} className={!isBudgetTabActive ? styles["active"] : ""}>
+                    <button onClick={showFixedTransactionsTab} className={!isBudgetTabActive ? styles["active"] : ""}>
                         Fixed Transactions
                     </button>
                 </div>

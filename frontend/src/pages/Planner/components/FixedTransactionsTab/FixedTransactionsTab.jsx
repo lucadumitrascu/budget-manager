@@ -9,7 +9,6 @@ const FixedTransactionsTab = ({
     categories,
     incomeSources,
     fixedTransactions,
-    dispatch,
     token,
 }) => {
     const fixedTransactionModalController = useModalController();
@@ -17,12 +16,7 @@ const FixedTransactionsTab = ({
     return (
         <div className={styles["fixed-transactions-tab"]}>
             <AddFixedTransactionCard
-                categories={categories}
-                incomeSources={incomeSources}
-                fixedTransactions={fixedTransactions}
-                dispatch={dispatch}
                 onAddFixedTransaction={() => fixedTransactionModalController.open(null)}
-                token={token}
             />
 
             {fixedTransactions.map((ft) => (
@@ -32,7 +26,6 @@ const FixedTransactionsTab = ({
                     currency={currency}
                     categories={categories}
                     incomeSources={incomeSources}
-                    fixedTransactions={fixedTransactions}
                     onEditFixedTransaction={fixedTransactionModalController.open}
                     token={token}
                 />
@@ -43,7 +36,6 @@ const FixedTransactionsTab = ({
                 title={fixedTransactionModalController.item ? "Edit Transaction" : "Add New Transaction"}
                 primaryButtonText={fixedTransactionModalController.item ? "Update" : "Add"}
                 fixedTransaction={fixedTransactionModalController.item || null}
-                fixedTransactions={fixedTransactions}
                 categories={categories}
                 incomeSources={incomeSources}
                 token={token}

@@ -136,7 +136,7 @@ const useLoadDataByPage = (page = "") => {
 
         fetchDataByPage();
 
-    }, [page, token]);
+    }, [page, localStorage.getItem("selectedPeriod"), token]);
 };
 
 export default useLoadDataByPage;
