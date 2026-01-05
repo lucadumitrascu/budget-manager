@@ -3,7 +3,6 @@ package ro.budgetmanager.entity;
 import jakarta.persistence.*;
 import ro.budgetmanager.enums.AuthProvider;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
