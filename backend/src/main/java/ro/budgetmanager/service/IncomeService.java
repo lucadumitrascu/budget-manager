@@ -12,10 +12,12 @@ import ro.budgetmanager.repository.IncomeRepository;
 import ro.budgetmanager.repository.IncomeSourceRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
+import static ro.budgetmanager.util.DateUtils.getDateIntervalFromPeriod;
 
 @Service
 public class IncomeService {
@@ -39,14 +41,17 @@ public class IncomeService {
         this.authService = authService;
     }
 
-    public ResponseEntity<ApiResponseDto<List<IncomeDto>>> getIncomes() {
+    public ResponseEntity<ApiResponseDto<List<IncomeDto>>> getIncomes(String period) {
         User user = authService.getAuthenticatedUser();
+        LocalDateTime[] dateInterval = getDateIntervalFromPeriod(period);
+        LocalDateTime startDate = dateInterval[0];
+        LocalDateTime endDate = dateInterval[1];
 
-        List<Income> incomes = incomeRepository
-                .findByIncomeSource_FinancialInfo_Id(user.getFinancialInfo().getId());
+        List<Income> filteredIncomes = incomeRepository
+                .findByIncomeSource_FinancialInfoAndCreatedAtBetween(user.getFinancialInfo(), startDate, endDate);
 
         return buildResponse("Incomes have been successfully retrieved.",
-                incomeMapper.toIncomeDtos(incomes), HttpStatus.OK);
+                incomeMapper.toIncomeDtos(filteredIncomes), HttpStatus.OK);
     }
 
     @Transactional

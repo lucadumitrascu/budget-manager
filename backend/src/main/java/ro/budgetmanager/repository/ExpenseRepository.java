@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
-    List<Expense> findByCategory_FinancialInfo_Id(Integer financialInfoId);
+    List<Expense> findByCategory_FinancialInfoAndCreatedAtBetween(FinancialInfo financialInfo, LocalDateTime startDate, LocalDateTime endDate);
 
     @Query("""
                 SELECT SUM(e.amount)

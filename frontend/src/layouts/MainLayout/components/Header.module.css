@@ -23,3 +23,37 @@
     padding: 5px 10px;
     border-radius: 6px;
 }
+
+.header .div-left {
+    display: flex;
+    align-items: center;
+}
+
+.header .div-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.period-selector {
+    background-color: #2f3e4d;
+    color: #ffffff;
+    padding: 0.3rem 0.5rem;
+    width: 10rem;
+    font-size: 1rem;
+    text-align: center;
+    text-align-last: center;
+    border: 1px solid #6c7680;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.period-selector:hover {
+    border-color: #4da6ff;
+}
+
+.period-selector:focus {
+    border-color: #4da6ff;
+}

@@ -20,8 +20,8 @@ public class IncomeController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseDto<List<IncomeDto>>> getIncomes() {
-        return incomeService.getIncomes();
+    public ResponseEntity<ApiResponseDto<List<IncomeDto>>> getIncomes(@RequestParam(defaultValue = "last30") String period) {
+        return incomeService.getIncomes(period);
     }
 
     @PostMapping

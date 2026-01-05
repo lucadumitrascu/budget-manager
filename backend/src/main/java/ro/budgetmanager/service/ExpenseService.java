@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
+import static ro.budgetmanager.util.DateUtils.getDateIntervalFromPeriod;
 
 @Service
 public class ExpenseService {
@@ -43,13 +44,17 @@ public class ExpenseService {
         this.authService = authService;
     }
 
-    public ResponseEntity<ApiResponseDto<List<ExpenseDto>>> getExpenses() {
+    public ResponseEntity<ApiResponseDto<List<ExpenseDto>>> getExpenses(String period) {
         User user = authService.getAuthenticatedUser();
-        List<Expense> expenses = expenseRepository
-                .findByCategory_FinancialInfo_Id(user.getFinancialInfo().getId());
+        LocalDateTime[] dateInterval = getDateIntervalFromPeriod(period);
+        LocalDateTime startDate = dateInterval[0];
+        LocalDateTime endDate = dateInterval[1];
+
+        List<Expense> filteredExpenses = expenseRepository
+                .findByCategory_FinancialInfoAndCreatedAtBetween(user.getFinancialInfo(), startDate, endDate);
 
         return buildResponse("Expenses have been successfully retrieved.",
-                expenseMapper.toExpenseDtos(expenses), HttpStatus.OK);
+                expenseMapper.toExpenseDtos(filteredExpenses), HttpStatus.OK);
     }
 
     @Transactional

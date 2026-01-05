@@ -1,6 +1,5 @@
 export const MAX_NUMBER_LIMIT = 9999999999999.99;
 export const MIN_NUMBER_LIMIT = -9999999999999.99;
-export const PROGRESS_TOTAL_STEPS = 3;
 
 export const CURRENCY_OPTIONS = [
     { value: "AED", label: "AED - United Arab Emirates Dirham" },
@@ -42,4 +41,16 @@ export const CURRENCY_OPTIONS = [
     { value: "UAH", label: "UAH - Ukrainian Hryvnia" },
     { value: "USD", label: "USD - US Dollar" },
     { value: "ZAR", label: "ZAR - South African Rand" },
+];
+
+export const PERIOD_OPTIONS = [
+    { value: "last7", label: "Last 7 days" },
+    { value: "last30", label: "Last 30 days" },
+    { value: "thisMonth", label: "This month" },
+    { value: "lastMonth", label: "Last month" },
+    { value: "last3months", label: "Last 3 months" },
+    { value: "last6months", label: "Last 6 months" },
+    { value: "thisYear", label: "This year" },
+    { value: "last12months", label: "Last 12 months" },
+    { value: "allTime", label: "All time" },
 ];

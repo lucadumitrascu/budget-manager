@@ -2,7 +2,9 @@ import { makeRequest } from "../utils/makeRequest";
 const API_BASE_URL = "http://localhost:8080/api/incomes";
 
 export const getIncomes = (token) => {
-    return makeRequest(API_BASE_URL, "", "GET", null, token);
+    const period = localStorage.getItem("selectedPeriod");
+    const url = period ? `${API_BASE_URL}?period=${period}` : API_BASE_URL;
+    return makeRequest(url, "", "GET", null, token);
 };
 
 export const addIncome = (newIncome, token) => {

@@ -20,8 +20,8 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseDto<List<ExpenseDto>>> getExpenses() {
-        return expenseService.getExpenses();
+    public ResponseEntity<ApiResponseDto<List<ExpenseDto>>> getExpenses(@RequestParam(defaultValue = "last30") String period) {
+        return expenseService.getExpenses(period);
     }
 
     @PostMapping
