@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface IncomeRepository extends JpaRepository<Income, Integer> {
     List<Income> findByIncomeSource_FinancialInfoAndCreatedAtBetween(FinancialInfo financialInfo, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Income> findByIncomeSource_FinancialInfoAndCreatedAtAfter(FinancialInfo financialInfo, LocalDateTime startDate);
 }

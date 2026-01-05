@@ -166,8 +166,6 @@ public class AuthService {
         FinancialInfo financialInfo = new FinancialInfo();
         financialInfo.setBudget(BigDecimal.ZERO);
         financialInfo.setCurrency("RON");
-        financialInfo.setSalary(BigDecimal.ZERO);
-        financialInfo.setSalaryDay(0);
         financialInfo.setUser(newUser);
 
         Planner planner = new Planner();
