@@ -57,12 +57,6 @@ public class FinancialInfoService {
         if (financialInfoDto.getCurrency() != null) {
             financialInfo.setCurrency(financialInfoDto.getCurrency());
         }
-        if (financialInfoDto.getSalary() != null) {
-            financialInfo.setSalary(financialInfoDto.getSalary());
-        }
-        if (financialInfoDto.getSalaryDay() != null) {
-            financialInfo.setSalaryDay(financialInfoDto.getSalaryDay());
-        }
 
         financialInfoRepository.save(financialInfo);
         return buildResponse("Financial information has been updated successfully.", null, HttpStatus.OK);
@@ -115,6 +109,20 @@ public class FinancialInfoService {
 
             fixedTransactionRepository.save(salaryFixedTransaction);
         }
+    }
+
+    public ResponseEntity<ApiResponseDto<String>> updateBudget(FinancialInfoDto financialInfoDto) {
+        User user = authService.getAuthenticatedUser();
+        user.getFinancialInfo().setBudget(financialInfoDto.getBudget());
+        financialInfoRepository.save(user.getFinancialInfo());
+        return buildResponse("Budget has been successfully updated.", null, HttpStatus.OK);
+    }
+
+    public ResponseEntity<ApiResponseDto<String>> updateCurrency(FinancialInfoDto financialInfoDto) {
+        User user = authService.getAuthenticatedUser();
+        user.getFinancialInfo().setCurrency(financialInfoDto.getCurrency());
+        financialInfoRepository.save(user.getFinancialInfo());
+        return buildResponse("Currency has been successfully updated.", null, HttpStatus.OK);
     }
 
     protected void adjustUserBudget(User user, BigDecimal amountChange) {

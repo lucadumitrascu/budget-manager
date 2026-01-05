@@ -26,4 +26,14 @@ public class UserController {
     public ResponseEntity<ApiResponseDto<String>> updateUsername(@Valid @RequestBody UserDto userDto) {
         return userService.updateUsername(userDto);
     }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponseDto<String>> deleteUser() {
+        return userService.deleteUser();
+    }
+
+    @PutMapping("/me/reset")
+    public ResponseEntity<ApiResponseDto<String>> resetUserData() {
+        return userService.resetUserData();
+    }
 }

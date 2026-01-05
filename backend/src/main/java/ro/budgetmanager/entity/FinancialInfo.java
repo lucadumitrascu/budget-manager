@@ -19,12 +19,6 @@ public class FinancialInfo {
     @Column(nullable = false)
     private String currency;
 
-    @Column(nullable = false)
-    private BigDecimal salary;
-
-    @Column(nullable = false)
-    private Integer salaryDay;
-
     @OneToMany(mappedBy = "financialInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories;
 
@@ -41,13 +35,11 @@ public class FinancialInfo {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public FinancialInfo(BigDecimal budget, String currency, BigDecimal salary, Integer salaryDay,
-                         List<Category> categories, List<IncomeSource> incomeSources, List<Goal> goals,
+    public FinancialInfo(BigDecimal budget, String currency, List<Category> categories,
+                         List<IncomeSource> incomeSources, List<Goal> goals,
                          Planner planner, User user) {
         this.budget = budget;
         this.currency = currency;
-        this.salary = salary;
-        this.salaryDay = salaryDay;
         this.categories = categories;
         this.incomeSources = incomeSources;
         this.goals = goals;
@@ -81,22 +73,6 @@ public class FinancialInfo {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
-
-    public Integer getSalaryDay() {
-        return salaryDay;
-    }
-
-    public void setSalaryDay(Integer salaryDay) {
-        this.salaryDay = salaryDay;
     }
 
     public List<Category> getCategories() {
