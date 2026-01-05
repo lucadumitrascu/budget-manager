@@ -1,8 +1,8 @@
 package ro.budgetmanager.entity;
 
 import jakarta.persistence.*;
-import ro.expensestracker.enums.FixedTransactionFrequency;
-import ro.expensestracker.enums.FixedTransactionType;
+import ro.budgetmanager.enums.FixedTransactionFrequency;
+import ro.budgetmanager.enums.FixedTransactionType;
 
 import java.math.BigDecimal;
 

@@ -12,14 +12,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.budgetmanager.dto.ApiResponseDto;
 import ro.budgetmanager.dto.UserCredentialsDto;
-import ro.budgetmanager.entity.FinancialInfo;
-import ro.budgetmanager.entity.Planner;
-import ro.budgetmanager.entity.User;
+import ro.budgetmanager.entity.*;
 import ro.budgetmanager.enums.AuthProvider;
+import ro.budgetmanager.repository.CategoryRepository;
+import ro.budgetmanager.repository.IncomeSourceRepository;
 import ro.budgetmanager.repository.UserRepository;
 import ro.budgetmanager.security.JwtTokenGenerator;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import static ro.budgetmanager.util.ApiUtils.buildResponse;
@@ -28,6 +29,8 @@ import static ro.budgetmanager.util.ApiUtils.buildResponse;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final IncomeSourceRepository incomeSourceRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenGenerator jwtTokenGenerator;
     private final PasswordEncoder passwordEncoder;
@@ -36,12 +39,16 @@ public class AuthService {
 
     public AuthService(
             UserRepository userRepository,
+            CategoryRepository categoryRepository,
+            IncomeSourceRepository incomeSourceRepository,
             AuthenticationManager authenticationManager,
             JwtTokenGenerator jwtTokenGenerator,
             PasswordEncoder passwordEncoder,
             EmailService emailService,
             GoogleService googleService) {
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
+        this.incomeSourceRepository = incomeSourceRepository;
         this.authenticationManager = authenticationManager;
         this.jwtTokenGenerator = jwtTokenGenerator;
         this.passwordEncoder = passwordEncoder;
@@ -171,6 +178,51 @@ public class AuthService {
 
         newUser.setFinancialInfo(financialInfo);
         userRepository.save(newUser);
+
+        setDefaultCategories(financialInfo);
+        setDefaultIncomeSources(financialInfo);
+    }
+
+    private void setDefaultCategories(FinancialInfo financialInfo) {
+        Category food = new Category();
+        food.setName("Food");
+        food.setFinancialInfo(financialInfo);
+
+        Category transport = new Category();
+        transport.setName("Transport");
+        transport.setFinancialInfo(financialInfo);
+
+        Category utilities = new Category();
+        utilities.setName("Utilities");
+        utilities.setFinancialInfo(financialInfo);
+
+        Category entertainment = new Category();
+        entertainment.setName("Entertainment");
+        entertainment.setFinancialInfo(financialInfo);
+
+        Category health = new Category();
+        health.setName("Health");
+        health.setFinancialInfo(financialInfo);
+
+        List<Category> categories = List.of(food, transport, utilities, entertainment, health);
+        categoryRepository.saveAll(categories);
+    }
+
+    private void setDefaultIncomeSources(FinancialInfo financialInfo) {
+        IncomeSource gifts = new IncomeSource();
+        gifts.setName("Gifts");
+        gifts.setFinancialInfo(financialInfo);
+
+        IncomeSource investments = new IncomeSource();
+        investments.setName("Investments");
+        investments.setFinancialInfo(financialInfo);
+
+        IncomeSource other = new IncomeSource();
+        other.setName("Other");
+        other.setFinancialInfo(financialInfo);
+
+        List<IncomeSource> sources = List.of(gifts, investments, other);
+        incomeSourceRepository.saveAll(sources);
     }
 
     public User getAuthenticatedUser() {

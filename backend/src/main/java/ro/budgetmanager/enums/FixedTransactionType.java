@@ -1,4 +1,4 @@
-package ro.expensestracker.enums;
+package ro.budgetmanager.enums;
 
 public enum FixedTransactionType {
     EXPENSE, INCOME
