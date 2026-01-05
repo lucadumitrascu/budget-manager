@@ -13,6 +13,7 @@ const useNavigation = () => {
         goToIncomes: () => navigate("/incomes"),
         goToSavings: () => navigate("/savings"),
         goToPlanner: () => navigate("/planner"),
+        goToSettings: () => navigate("/settings")
     };
 };
 

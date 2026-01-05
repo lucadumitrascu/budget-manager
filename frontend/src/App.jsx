@@ -10,6 +10,7 @@ import Expenses from "./pages/Expenses/Expenses";
 import Incomes from "./pages/Incomes/Incomes";
 import Savings from "./pages/Savings/Savings";
 import Planner from "./pages/Planner/Planner";
+import Settings from "./pages/Settings/Settings";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/incomes" element={<Incomes />} />
                 <Route path="/savings" element={<Savings />} />
                 <Route path="/planner" element={<Planner />} />
+                <Route path="/settings" element={<Settings />} />
             </Routes>
         </Router>
     );

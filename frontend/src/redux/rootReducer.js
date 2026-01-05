@@ -9,7 +9,7 @@ import savingsReducer from "./slices/savingsSlice";
 import goalsReducer from "./slices/goalsSlice";
 import plannerReducer from "./slices/plannerSlice";
 import fixedTransactionsReducer from "./slices/fixedTransactionsSlice";
-import { logoutUserAction } from "./rootActions";
+import { logoutUserAction, resetUserDataAction } from "./rootActions";
 
 const appReducer = combineReducers({
     user: userReducer,
@@ -27,6 +27,9 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
     if (action.type === logoutUserAction.type) {
         state = undefined;
+    }
+    if (action.type === resetUserDataAction.type) {
+        return appReducer(undefined, action);
     }
     return appReducer(state, action);
 };

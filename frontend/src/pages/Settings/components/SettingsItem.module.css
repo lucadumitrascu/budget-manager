@@ -1,0 +1,54 @@
+.settings-item {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.settings-item label {
+    justify-self: center;
+    align-self: center;
+    font-size: 1.1rem;
+}
+
+.editable-field input,
+.editable-field select {
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 0.4rem;
+    height: 2rem;
+    width: 100%;
+}
+
+.editable-field select {
+    height: max-content;
+    padding: 0.5rem 0.3rem;
+}
+
+.settings-item button {
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.1rem 0;
+    border-radius: 5px;
+    width: 6rem;
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #1993da;
+}
+
+.save-button {
+    background-color: #2ECC71;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 3px 0;
+}

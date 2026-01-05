@@ -1,0 +1,54 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 60%;
+    padding: 1rem;
+    background-color: #2C3E50;
+    color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    animation: fade-in-section 0.2s linear;
+    margin-bottom: 10rem;
+}
+
+@keyframes fade-in-section {
+    from {
+        transform: translateY(1rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.settings h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.btn-reset,
+.btn-delete {
+    padding: 0.5rem 1rem;
+    margin-top: auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-reset {
+    background-color: #FF9800;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+btn:hover {
+    opacity: 0.9;
+}

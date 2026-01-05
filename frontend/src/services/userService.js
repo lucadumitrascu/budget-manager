@@ -8,3 +8,11 @@ export const getUserData = (token) => {
 export const saveUsername = (username, token) => {
     return makeRequest(API_BASE_URL, "/me/username", "PUT", { username }, token);
 };
+
+export const deleteUser = (token) => {
+    return makeRequest(API_BASE_URL, "/me", "DELETE", null, token);
+};
+
+export const resetUserData = (token) => {
+    return makeRequest(API_BASE_URL, "/me/reset", "PUT", null, token);
+};

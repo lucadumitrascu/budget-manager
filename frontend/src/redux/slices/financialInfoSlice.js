@@ -5,8 +5,6 @@ const financialInfoSlice = createSlice({
     initialState: {
         budget: 0,
         currency: "RON",
-        salary: 0,
-        salaryDay: 0,
     },
     reducers: {
         setFinancialInfoAction: (state, action) => {
@@ -22,12 +20,6 @@ const financialInfoSlice = createSlice({
         setCurrencyAction: (state, action) => {
             state.currency = action.payload;
         },
-        setSalaryAction: (state, action) => {
-            state.salary = action.payload;
-        },
-        setSalaryDayAction: (state, action) => {
-            state.salaryDay = action.payload;
-        },
     },
 });
 
@@ -35,8 +27,6 @@ export const {
     setFinancialInfoAction,
     setBudgetAction,
     setCurrencyAction,
-    setSalaryAction,
-    setSalaryDayAction
 } = financialInfoSlice.actions;
 
 export default financialInfoSlice.reducer;
