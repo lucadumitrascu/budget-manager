@@ -20,6 +20,7 @@ import ro.budgetmanager.repository.UserRepository;
 import ro.budgetmanager.security.JwtTokenGenerator;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -144,6 +145,12 @@ public class AuthService {
         try {
             if (password != null) {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            }
+            Optional<User> userOptional = userRepository.findByEmail(email);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                user.setLastAccessTime(LocalDateTime.now());
+                userRepository.save(user);
             }
             String token = jwtTokenGenerator.generateToken(email, false);
             return buildResponse(null, token, successStatus);
